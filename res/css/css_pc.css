@@ -1,0 +1,33 @@
+@charset "utf-8";
+/* CSS Document */
+
+html{font-size:25px;}
+body{
+	font-family:微软雅黑;
+	background:#e6dfc2;
+	width:100%;
+	margin:0 auto;
+	padding:0
+	}
+div,ul,h3,h4,h5,p,ol,li{
+	margin:0px;
+	padding:0px
+}
+ul,li{ list-style-type:none}
+img{ display:block }
+a{ text-decoration:none}
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+    width: 0px;
+}
+::-webkit-input-placeholder { 
+color: #666; 
+} 
+input[type="button"], input[type="submit"], input[type="reset"],select {
+-webkit-appearance: none;
+}
+textarea {  -webkit-appearance: none;}   
+button{ border-radius: 0; }
+input[placeholder], [placeholder], *[placeholder] {
+   color:#666666 !important;
+}

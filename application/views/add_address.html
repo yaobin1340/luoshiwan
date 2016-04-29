@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/style.css" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/jquery.bxslider.css" />
+<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="../res/css/css_app.css" />
+<link rel="stylesheet" type="text/css" media="screen and (min-width: 480px)" href="../res/css/css_pc.css" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection">
+<title>螺蛳湾商城</title>
+</head>
+<body>
+<!--头部开始-->
+ <div class="header">
+  <img src="../res/images/logo.jpg" class="img_logo">
+ </div>
+ <img src="../res/images/btn_more.png" class="img_btn_more">
+ <ul class="top_menu"> 
+   <div class="menu_content">新增收货地址<img src="../res/images/arrow_pre.png" class="back_icon"></div>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+ 	<form action="" method="post" enctype="multipart/form-data">
+ 	<div class="address_part_one">
+ 		<div class="input_box"><input name="myname" placeholder="姓名" type="text" required class="input_text"></div>
+ 		<div class="input_box"><input name="myname" placeholder="电话" type="text" required class="input_text"></div>
+ 	</div>
+ 	<div class="address_part_one">
+ 		<div class="input_box limit_width">
+ 		   <img src="../res/images/icon_arrow_down.png" class="icon_down">
+	       <select name="item" class="select_box">
+	         <option value="0">省份</option>
+	         <option value="0">省份</option>
+	         <option value="0">省份</option>
+	         <option value="0">省份</option>
+	       </select>
+ 		</div>
+ 		<div class="input_box limit_width">
+ 			<img src="../res/images/icon_arrow_down.png" class="icon_down">
+	       <select name="item" class="select_box">
+	         <option value="0">城市</option>
+	       </select>
+ 		</div>
+ 		<div class="input_box limit_width">
+ 			<img src="../res/images/icon_arrow_down.png" class="icon_down">
+	       <select name="item" class="select_box">
+	         <option value="0">县市</option>
+	       </select>
+ 		</div>
+        <div class="input_box limit_width limit_ht">
+            <textarea name="address" cols="" rows=""  required>详细地址</textarea>
+ 		</div>
+ 		<div class="input_box limit_width"><input name="myname" placeholder="邮政编码（选题）" type="text" required class="input_text"></div>
+ 	</div>
+ 	<div class="address_part_one limint_padding">
+ 		<span class="check_tile">设为默认</span>
+	    <div class="slideThree">  
+	      <input type="checkbox" value="None" id="slideThree" name="check" checked />
+	      <label for="slideThree"></label>
+	    </div>
+ 	</div>
+ 	<div class="address_part_one limint_padding"><input type="button" name="sumbit" value="保存" class="form_sumbit"></div> 	
+ 	</form>
+ </div>
+</body>
+<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="../res/js/topmenu.js"></script>
+<script type="text/javascript" src="../res/js/boxslide.js"></script>
+<script type="text/javascript" src="../res/js/lazyload.js"></script>
+<script type="text/javascript" src="../res/js/price_order.js"></script>
+<script type="text/javascript">
+$(function(){	
+
+});
+
+</script>
+</html>

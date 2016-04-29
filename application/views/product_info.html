@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/style.css" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/jquery.bxslider.css" />
+<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="../res/css/css_app.css" />
+<link rel="stylesheet" type="text/css" media="screen and (min-width: 480px)" href="../res/css/css_pc.css" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>螺蛳湾商城</title>
+</head>
+<body>
+<!--产品属性选择开始-->
+<div class="prt_property">
+	<div class="prt_property_bg"></div>
+	<div class="prt_property_info">
+	   <img src="../res/images/icon_close.png" class="close_btm">
+       <span class="open_slt_title">产品标题</span>
+       <span class="open_slt_price">￥98.8</span>
+       <span class="open_slt_protitle">选择属性</span>
+       <div class="open_slt_content">
+       	  <ul>
+       	  	<li>一箱5斤一箱5斤一箱5斤一箱5斤</li>
+       	  	<li>二箱10斤二箱10斤</li>
+       	  	<li>一箱15斤二箱10斤二箱10斤二箱10斤</li>
+       	  	<li>一箱5斤一箱5斤一箱5斤一箱5斤</li>
+       	  </ul>
+       </div>
+       <div class="open_slt_num">
+       	  <span class="open_slt_protitle">购买数量</span>
+       	  <div class="btn_add" >
+		    <a href="#" class="arrow click_subtract"><img src="../res/images/icon_jia.jpg"></a> 
+		        <span class="viewnum" id="qty_v" style="display:none;">1</span>
+		        <input type="text"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
+		    <a href="#" class="arrow click_add"><img src="../res/images/icon_jian.jpg"></a>
+	      </div>
+       </div>
+       <div class="open_slt_submit">确定</div>
+	</div>
+</div>
+<!--头部开始-->
+ <div class="header">
+  <img src="../res/images/logo.jpg" class="img_logo">
+ </div>
+ <img src="../res/images/btn_more.png" class="img_btn_more">
+ <ul class="top_menu"> 
+   <div class="menu_content">农副产品<img src="../res/images/arrow_pre.png" class="back_icon"></div>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+ 	<!--产品图片滚动开始-->
+    <div class="slider7">
+      <div class="slide"><img src="../res/images/banner.jpg"></div>
+      <div class="slide"><img src="../res/images/banner_1.jpg"></div>
+    </div>
+    <div class="prt_header">
+      <h3>苏北大米苏北大米苏北大米苏北大米</h3>
+      <span class="price_all">￥90.8</span>      
+    </div>
+    <div class="ems"><span>运费</span>包邮</div>
+    <div class="prt_type">选择颜色分类<img src="../res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;"></div>
+    <div class="prt_info">
+    	<span class="xiangqing">详情</span>
+    	详细内容
+    </div>
+ </div>
+  <!--底部菜单开始-->
+  <ul class="bottom_menu">
+  	<li>加入购物车</li>
+  	<li>立即购买</li>
+  </ul>
+</body>
+<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="../res/js/topmenu.js"></script>
+<script type="text/javascript" src="../res/js/boxslide.js"></script>
+<script type="text/javascript" src="../res/js/lazyload.js"></script>
+<script type="text/javascript" src="../res/js/price_order.js"></script>
+<script type="text/javascript">
+$(function(){
+           $('.slider7').bxSlider({ 
+            slideWidth: 640, 
+			infiniteLoop: true,
+            controls: false,    
+            auto: true,
+            autoStart: true,
+          });
+          $(window).load(function(){
+          	$(".bx-wrapper").css("margin","0.5rem auto 0 auto");
+          });
+          $(".prt_type").on('tap',function(){
+          	 $(".prt_property").addClass("on");
+          	 $(".prt_property_info").addClass("pt-page-moveFromBottom");
+          	 
+          });
+          $(".prt_property_bg,.close_btm").on('tap',function(){
+          	 $(".prt_property").removeClass("on");
+          	 $(".prt_property_info").removeClass("pt-page-moveFromBottom");
+          });
+          $(".open_slt_content li").each(function(){
+          	$(this).on('tap',function(){
+          		$(this).addClass("order_active");
+          		$(this).siblings().removeClass("order_active");
+          	});
+          });
+});
+</script>
+</html>

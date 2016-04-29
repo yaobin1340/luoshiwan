@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/style.css" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/jquery.bxslider.css" />
+<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="../res/css/css_app.css" />
+<link rel="stylesheet" type="text/css" media="screen and (min-width: 480px)" href="../res/css/css_pc.css" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection">
+<title>螺蛳湾商城</title>
+</head>
+<body>
+
+<!--头部开始-->
+ <div class="header">
+  <img src="../res/images/logo.jpg" class="img_logo">
+ </div>
+ <img src="../res/images/btn_more.png" class="img_btn_more">
+ <ul class="top_menu"> 
+   <div class="menu_content">我的订单<img src="../res/images/arrow_pre.png" class="back_icon"></div>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+    <!--搜索框开始-->
+    <div class="search_box">
+    	 <div class="search_box_top">
+    	 		<input type="text" name="search" placeholder="请输入订单号/手机号/消费码等关键字查询" required >
+    	 		<img src="../res/images/icon_search.png" class="icon_search">
+    	 </div>
+    	 <ul class="search_box_bottom">
+    	 	<li class="on_order">全部 <span class="line on"></span></li>
+    	 	<li>未提货<span class="line"></span></li>
+    	 	<li>已提货<span class="line"></span></li>
+    	 </ul>
+    </div>
+    <!--订单列表开始-->
+  <div class="order_info_list">
+  	<!--全部订单开始-->
+	   <div class="list_show on">
+		    <div class="order_list limit_shadow">
+		    	<div class="order_num">订单号：<font class="num_pay">20160201888888</font></div>
+			    <ul class="myorder_list">
+			    	<li>
+			    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+			    		<span class="cart_title">苏北野生大鲤鱼</span>
+			    		<span class="cart_spec">600克/条</span>
+			    		<div class="cart_price">
+			    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+			    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+			    		</div>
+			    	</li>
+			    	<li>
+			    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+			    		<span class="cart_title">苏北野生大鲤鱼</span>
+			    		<span class="cart_spec">600克/条</span>
+			    		<div class="cart_price">
+			    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+			    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+			    		</div>
+			    	</li>
+			    </ul>
+			    <div class="order_time">
+			    	<span class="time_show_order limint_w_h">下单时间：2016-02-01 16:20:33</span>
+			    	<div class="order_name">
+			    		<span class="order_name_left">张先生 13988888888</span>
+			    		<span class="order_name_right do_yes">已提货</span>
+			    	</div>
+			    </div>
+		    </div>  
+		    <div class="order_list limit_shadow">
+	    	<div class="order_num">订单号：<font class="num_pay">20160201888888</font></div>
+		    <ul class="myorder_list">
+		    	<li>
+		    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+		    		<span class="cart_title">苏北野生大鲤鱼</span>
+		    		<span class="cart_spec">600克/条</span>
+		    		<div class="cart_price">
+		    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+		    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+		    		</div>
+		    	</li>
+		    </ul>
+		    <div class="order_time">
+		    	<span class="time_show_order limint_w_h">下单时间：2016-02-01 16:20:33</span>
+		    	<div class="order_name">
+		    		<span class="order_name_left">张先生 13988888888</span>
+		    		<span class="order_name_right">已提货</span>
+		    	</div>
+		    </div>
+	    </div>    
+	   </div>
+  	<!--未提货订单开始-->
+	   <div class="list_show">
+		    <div class="order_list limit_shadow">
+		    	<div class="order_num">订单号：<font class="num_pay">201602018888881</font></div>
+			    <ul class="myorder_list">
+			    	<li>
+			    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+			    		<span class="cart_title">苏北野生大鲤鱼</span>
+			    		<span class="cart_spec">600克/条</span>
+			    		<div class="cart_price">
+			    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+			    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+			    		</div>
+			    	</li>
+			    	<li>
+			    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+			    		<span class="cart_title">苏北野生大鲤鱼</span>
+			    		<span class="cart_spec">600克/条</span>
+			    		<div class="cart_price">
+			    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+			    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+			    		</div>
+			    	</li>
+			    </ul>
+			    <div class="order_time">
+			    	<span class="time_show_order limint_w_h">下单时间：2016-02-01 16:20:33</span>
+			    	<div class="order_name">
+			    		<span class="order_name_left">张先生 13988888888</span>
+			    		<span class="order_name_right do_yes">已提货</span>
+			    	</div>
+			    </div>
+		    </div>  
+		    <div class="order_list limit_shadow">
+	    	<div class="order_num">订单号：<font class="num_pay">20160201888888</font></div>
+		    <ul class="myorder_list">
+		    	<li>
+		    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+		    		<span class="cart_title">苏北野生大鲤鱼</span>
+		    		<span class="cart_spec">600克/条</span>
+		    		<div class="cart_price">
+		    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+		    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+		    		</div>
+		    	</li>
+		    </ul>
+		    <div class="order_time">
+		    	<span class="time_show_order limint_w_h">下单时间：2016-02-01 16:20:33</span>
+		    	<div class="order_name">
+		    		<span class="order_name_left">张先生 13988888888</span>
+		    		<span class="order_name_right">已提货</span>
+		    	</div>
+		    </div>
+	    </div>    
+	   </div>
+  	<!--已提货订单开始-->
+	   <div class="list_show">
+		    <div class="order_list limit_shadow">
+		    	<div class="order_num">订单号：<font class="num_pay">201602018888882</font></div>
+			    <ul class="myorder_list">
+			    	<li>
+			    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+			    		<span class="cart_title">苏北野生大鲤鱼</span>
+			    		<span class="cart_spec">600克/条</span>
+			    		<div class="cart_price">
+			    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+			    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+			    		</div>
+			    	</li>
+			    	<li>
+			    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+			    		<span class="cart_title">苏北野生大鲤鱼</span>
+			    		<span class="cart_spec">600克/条</span>
+			    		<div class="cart_price">
+			    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+			    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+			    		</div>
+			    	</li>
+			    </ul>
+			    <div class="order_time">
+			    	<span class="time_show_order limint_w_h">下单时间：2016-02-01 16:20:33</span>
+			    	<div class="order_name">
+			    		<span class="order_name_left">张先生 13988888888</span>
+			    		<span class="order_name_right do_yes">已提货</span>
+			    	</div>
+			    </div>
+		    </div>  
+		    <div class="order_list limit_shadow">
+	    	<div class="order_num">订单号：<font class="num_pay">20160201888888</font></div>
+		    <ul class="myorder_list">
+		    	<li>
+		    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+		    		<span class="cart_title">苏北野生大鲤鱼</span>
+		    		<span class="cart_spec">600克/条</span>
+		    		<div class="cart_price">
+		    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+		    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+		    		</div>
+		    	</li>
+		    </ul>
+		    <div class="order_time">
+		    	<span class="time_show_order limint_w_h">下单时间：2016-02-01 16:20:33</span>
+		    	<div class="order_name">
+		    		<span class="order_name_left">张先生 13988888888</span>
+		    		<span class="order_name_right">已提货</span>
+		    	</div>
+		    </div>
+	    </div>    
+	   </div>	   
+   </div>
+  
+  </div>
+
+</body>
+<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="../res/js/topmenu.js"></script>
+<script type="text/javascript" src="../res/js/boxslide.js"></script>
+<script type="text/javascript" src="../res/js/lazyload.js"></script>
+<script type="text/javascript" src="../res/js/price_order.js"></script>
+</html>

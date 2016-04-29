@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/style.css" />
+<link rel="stylesheet" type="text/css" href="../res/css/shop/jquery.bxslider.css" />
+<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="../res/css/css_app.css" />
+<link rel="stylesheet" type="text/css" media="screen and (min-width: 480px)" href="../res/css/css_pc.css" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection">
+<title>螺蛳湾商城</title>
+</head>
+<body>
+<!--选择地址开始-->
+ <div class="address_list">
+	 <div class="header">
+	  <img src="../res/images/logo.jpg" class="img_logo">
+	 </div>
+     <div class="sladdress_list"> 
+     	<ul>
+     		<li>
+			 	<div class="order_address limit_padding">
+			 		<img src="../res/images/icon_yes.png" class="icon_next">
+			 		<div class="sel_address on">
+			 			<div class="sel_address_top"><span class="mail_name">自提</span><span class="mail_tel"></span></div>
+			 			<div class="sel_address_bottom"><span class="first_do">[默认]</span>收货地址：<span class="address_eq">江苏省常熟市螺蛳湾文化休闲中心</span></div>
+			 		</div>
+			 	</div>     			
+     		</li>
+     		<li>
+			 	<div class="order_address limit_padding">
+			 		<img src="../res/images/icon_yes.png" class="icon_next hide">
+			 		<div class="sel_address on">
+			 			<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+			 			<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号1</span></div>
+			 		</div>
+			 	</div>      			
+     		</li>
+     		<li>
+			 	<div class="order_address limit_padding">
+			 		<img src="../res/images/icon_yes.png" class="icon_next hide">
+			 		<div class="sel_address on">
+			 			<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+			 			<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号2</span></div>
+			 		</div>
+			 	</div>     			
+     		</li>
+     		<li>
+			 	<div class="order_address limit_padding">
+			 		<img src="../res/images/icon_yes.png" class="icon_next hide">
+			 		<div class="sel_address on">
+			 			<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+			 			<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号3</span></div>
+			 		</div>
+			 	</div>      			
+     		</li>
+     		<li>
+			 	<div class="order_address limit_padding">
+			 		<img src="../res/images/icon_yes.png" class="icon_next hide">
+			 		<div class="sel_address on">
+			 			<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+			 			<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号4</span></div>
+			 		</div>
+			 	</div>      			
+     		</li>
+     	</ul>
+     </div>
+     <div class="sladdress_add">添加地址</div>
+ </div>
+<!--头部开始-->
+ <div class="header">
+  <img src="../res/images/logo.jpg" class="img_logo">
+ </div>
+ <img src="../res/images/btn_more.png" class="img_btn_more">
+ <ul class="top_menu"> 
+   <div class="menu_content">确认订单<img src="../res/images/arrow_pre.png" class="back_icon"></div>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+ 	<div class="order_address" id="address">
+ 		<img src="../res/images/icon_dibiao.png" class="icon_dibiao">
+ 		<img src="../res/images/arrow_next.png" class="icon_next">
+<!-- 		<span class="sel_address_title">请选择您的收货地址</span>-->
+ 		<div class="sel_address on" id="mail_address_show">
+ 			<div class="sel_address_top"><span class="mail_name">自提</span><span class="mail_tel"></span></div>
+ 			<div class="sel_address_bottom">收货地址：<span class="address_eq">江苏省常熟市螺蛳湾休闲文化中心</span></div>
+ 		</div>
+ 	</div>
+    <ul class="cart_list limit_shadow">
+    	<li class="order_cf">
+    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+    		<span class="cart_title">苏北野生大鲤鱼</span>
+    		<span class="cart_spec">600克/条</span>
+    		<div class="cart_price">
+    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+    		</div>
+    	</li>
+    	<li class="order_cf">
+    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+    		<span class="cart_title">苏北野生大鲤鱼</span>
+    		<span class="cart_spec">600克/条</span>
+    		<div class="cart_price">
+    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+    		</div>
+    	</li>
+    	<li class="order_cf">
+    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
+    		<span class="cart_title">苏北野生大鲤鱼</span>
+    		<span class="cart_spec">600克/条</span>
+    		<div class="cart_price">
+    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
+    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
+    		</div>
+    	</li>
+    </ul>
+    <div class="remarks">
+    	<span class="remark_title">留言备注</span>
+    	<textarea cols="" rows="" class="remark_content">请输入...</textarea>
+    </div>
+ </div>
+  <!--底部菜单开始-->
+  <ul class="bottom_menu">
+  	<li style=" position:relative; width: 66%; background: #ffffff; height: 2.5rem;">
+  		<span class="price_sum">合计：<font>￥</font><span class="price_sum_num">0.0</span></span>
+  	</li>
+  	<li style=" position:relative; width: 34%;">结算(<span class="sl_ck">0</span>)</li>
+  </ul>
+</body>
+<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="../res/js/topmenu.js"></script>
+<script type="text/javascript" src="../res/js/boxslide.js"></script>
+<script type="text/javascript" src="../res/js/lazyload.js"></script>
+<script type="text/javascript" src="../res/js/price_order.js"></script>
+<script type="text/javascript">
+$(function(){
+    $(".sladdress_list li").each(function(){
+    	$(this).click(function(){
+    		var v_address=$(this).find(".address_eq").text();
+    		var v_name=$(this).find(".mail_name").text();
+    		var v_tel=$(this).find(".mail_tel").text();
+    		$(this).find(".icon_next").removeClass("hide");
+    		$(this).siblings().find(".icon_next").addClass("hide");
+    		$("#mail_address_show").find(".address_eq").text(v_address);
+    		$("#mail_address_show").find(".mail_name").text(v_name);
+    		$("#mail_address_show").find(".mail_tel").text(v_tel);
+    		$(".address_list").removeClass("pt-page-moveFromRight");   		
+    	});
+    });
+    $("#address").click(function(){
+    	    $(".address_list").addClass("pt-page-moveFromRight");
+    });
+});
+</script>
+</html>
