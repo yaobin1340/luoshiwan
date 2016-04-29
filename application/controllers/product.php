@@ -25,4 +25,8 @@ class Product extends MY_Controller
     function product_list(){
         $this->cismarty->display('product_list.html');
     }
+
+    function product_info(){
+        $this->cismarty->display('product_info.html');
+    }
 }

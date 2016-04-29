@@ -1,24 +1,6 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" type="text/css" href="../res/css/shop/style.css" />
-<link rel="stylesheet" type="text/css" href="../res/css/shop/jquery.bxslider.css" />
-<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="../res/css/css_app.css" />
-<link rel="stylesheet" type="text/css" media="screen and (min-width: 480px)" href="../res/css/css_pc.css" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<title>螺蛳湾商城</title>
-</head>
-<body>
-<!--头部开始-->
- <div class="header">
-  <img src="../res/images/logo.jpg" class="img_logo">
- </div>
- <img src="../res/images/btn_more.png" class="img_btn_more">
- <ul class="top_menu"> 
-   <div class="menu_content">农副产品<img src="../res/images/arrow_pre.png" class="back_icon"></div>
+{{include file="head.html"}}
+ <ul class="top_menu">
+     <a href="{{site_url url='product/product_main'}}"><div class="menu_content">农副产品<img src="../res/images/arrow_pre.png" class="back_icon"></div></a>
  </ul>
  </div>
  <!--内容开始-->
@@ -29,10 +11,10 @@
     </div>
     <!--首页推荐产品开始-->
     <ul class="index_list">
-    	<li><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></li>
-    	<li><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></li>
-    	<li><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></li>
-    	<li><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></li>
+    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></a></li>
+    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></a></li>
+    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></a></li>
+    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></a></li>
     </ul>
     <span class="load_more">载入更多...</span>
  </div>
