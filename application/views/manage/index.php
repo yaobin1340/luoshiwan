@@ -23,13 +23,22 @@
 <script src="<?php echo base_url();?>dwz/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>dwz/js/jquery.validate.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-<script src="<?php echo base_url();?>assets/js/jquery.cxcolor.min.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url();?>dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>dwz/bin/dwz.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>dwz/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
+
+<!--plupload start--------------------------------------------------------------------------->
+<link rel="stylesheet" href="<?php echo base_url();?>plupload/js/jquery.ui.plupload/css/jquery-ui-1.9.2.custom.min.css" type="text/css" />
+	<script src="<?php echo base_url();?>plupload/js/jquery-ui-1.9.2.custom.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url();?>plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css" type="text/css" />
+<script type="text/javascript" src="<?php echo base_url();?>plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plupload/js/zh_CN.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plupload/js/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+
+<!--plupload end---------------------------------------------------------------------------->
 
 
 <script type="text/javascript">
@@ -95,7 +104,8 @@ function close_all_navtab(){
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-							<li><a href="<?php echo site_url('manage/list_product');?>" target="navTab" rel="list_product" onclick="close_all_navtab()">款式管理</a></li>
+							<li><a href="<?php echo site_url('manage/list_product_type');?>" target="navTab" rel="list_product_type" onclick="close_all_navtab()">产品类别</a></li>
+							<li><a href="<?php echo site_url('manage/list_product');?>" target="navTab" rel="list_product" onclick="close_all_navtab()">产品管理</a></li>
 						</ul>
 					</div>
 

@@ -9,7 +9,7 @@
  * @author		yaobin<645894453@qq.com>
  *
  */
-class Manage_login extends MY_Controller {
+class Manage_login extends CI_Controller {
 
 	public function __construct()
 	{

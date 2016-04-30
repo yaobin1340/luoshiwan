@@ -1,7 +1,7 @@
 <form id="pagerForm" method="post" action="<?php echo site_url('manage/list_product')?>">
 	<input type="hidden" name="pageNum" value="<?php echo $pageNum;?>" />
 	<input type="hidden" name="numPerPage" value="<?php echo $numPerPage;?>" />
-	<input type="hidden" name="num" value="<?php echo $num;?>" />
+	<input type="hidden" name="name" value="<?php echo $name;?>" />
 	<input type="hidden" name="orderField" value="<?php echo $this->input->post('orderField');?>" />
 	<input type="hidden" name="orderDirection" value="<?php echo $this->input->post('orderDirection');?>" />
 </form>
@@ -11,7 +11,7 @@
 		<div class="searchBar">
 			<table class="searchContent" id="search_purchase_order">
 				<tr>
-					<td><label>型号：</label><input type="text" size="16" name="num" value="<?php echo $num;?>" /></td>
+					<td><label>产品名称：</label><input type="text" size="16" name="name" value="<?php echo $name;?>" /></td>
 				</tr>
 			</table>
 			<div class="subBar">
@@ -36,8 +36,8 @@
 	<table class="list" width="100%" targetType="navTab" asc="asc" desc="desc">
 		<thead>
 			<tr>
-				<th>型号</th>
-				<th width="90">颜色</th>
+				<th>产品名称</th>
+				<th width="90">状态</th>
 				<th width="120">创建时间</th>
 			</tr>
 		</thead>
@@ -47,8 +47,8 @@
             	    foreach ($res_list as $row):		               
             ?>		            
             			<tr target="id" rel=<?php echo $row->id; ?>>
-            				<td><?php echo $row->num;?></td>
-            				<td><?php echo $row->color;?></td>
+            				<td><?php echo $row->name;?></td>
+            				<td><?php echo $row->status == 1?'<font color="green">销售中</font>':'<font color="red">已下架</font>';?></td>
             				<td><?php echo $row->cdate;?></td>
             			</tr>
             <?php 

@@ -9,12 +9,15 @@
  * @author		yaobin<645894453@qq.com>
  *
  */
-class Manage extends MY_Controller {
+class Manage extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
+		ini_set('date.timezone','Asia/Shanghai');
 		$this->load->model('manage_model');
+		$this->load->library('image_lib');
+		$this->load->helper('directory');
 	}
 
 	function _remap($method,$params = array())
@@ -41,6 +44,7 @@ class Manage extends MY_Controller {
 		$this->load->view('manage/index.php');
 	}
 
+	//===============================================public start==========================================//
 	public function upload_pic(){
 		$path = './././uploadfiles/others/';
 		$path_out = '/uploadfiles/others/';
@@ -63,72 +67,99 @@ class Manage extends MY_Controller {
 		}
 		echo "{'err':'".$err."','msg':".$msg."}";
 	}
-	
 
+	public function add_pics($time,$flag=null){
+		$data['time'] = $time;
+		$data['flag'] = $flag;
+
+		$this->load->view('manage/add_pics.php',$data);
+	}
+
+	public function save_pics($time){
+		if (is_readable('./././uploadfiles/pics/'.$time) == false) {
+			mkdir('./././uploadfiles/pics/'.$time);
+		}
+
+		if (is_readable('./././uploadfiles/pics/'.$time) == false) {
+			mkdir('./././uploadfiles/pics/'.$time);
+		}
+
+		$path = './././uploadfiles/pics/'.$time;
+
+		//设置缩小图片属性
+		$config_small['image_library'] = 'gd2';
+		$config_small['create_thumb'] = TRUE;
+		$config_small['quality'] = 80;
+		$config_small['maintain_ratio'] = TRUE; //保持图片比例
+		$config_small['new_image'] = $path;
+		$config_small['width'] = 300;
+		$config_small['height'] = 190;
+
+		//设置原图限制
+		$config['upload_path'] = $path;
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = '10000';
+		$config['encrypt_name'] = true;
+		$this->load->library('upload', $config);
+
+		if($this->upload->do_upload()){
+			$data = $this->upload->data();//返回上传文件的所有相关信息的数组
+			$config_small['source_image'] = $data['full_path']; //文件路径带文件名
+			$this->image_lib->initialize($config_small);
+			$this->image_lib->resize();
+			form_submit_json("200", "操作成功", "");
+		}else{
+			form_submit_json("300", $this->upload->display_errors('<b>','</b>'));
+			exit;
+		}
+	}
+
+	//ajax获取图片信息
+	public function get_pics($time){
+		$path = './././uploadfiles/pics/'.$time;
+		$map = directory_map($path);
+		$data = array();
+		//整理图片名字，取缩略图片
+		foreach($map as $v){
+			if(substr(substr($v,0,strrpos($v,'.')),-5) == 'thumb'){
+				$data['img'][] = $v;
+			}
+		}
+		$data['time'] = $time;//文件夹名称
+		echo json_encode($data);
+	}
+
+	//ajax删除图片
+	public function del_pic($folder,$pic){
+		@unlink('./././uploadfiles/pics/'.$folder.'/'.$pic);
+		@unlink('./././uploadfiles/pics/'.$folder.'/'.str_replace('_thumb', '', $pic));
+		$data = array(
+			'flag'=>1,
+			'pic'=>$pic
+		);
+		echo json_encode($data);
+	}
+
+	//===============================================public end==========================================//
 	
 	public function list_product(){
 		$data = $this->manage_model->list_product();
 		$this->load->view('manage/list_product.php',$data);
 	}
 
-	public function list_product_dialog(){
-		$data = $this->manage_model->list_product();
-		$this->load->view('manage/list_product_dialog.php',$data);
-	}
-	
 	public function add_product(){
-		$this->load->view('manage/add_product.php');
-	}
-	
-	public function delete_product($id){
-		$rs = $this->manage_model->delete_product($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_product", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
+		$data['list_type'] = $this->manage_model->get_product_type_list();
+		$this->load->view('manage/add_product.php',$data);
 	}
 	
 	public function edit_product($id){
 		$data = $this->manage_model->get_product($id);
+		$data['list_type'] = $this->manage_model->get_product_type_list();
 		$this->load->view('manage/add_product.php',$data);
 	}
 	
 	public function save_product(){
-		if(!$this->manage_model->check_num($this->input->post('num'))){
-			form_submit_json("300", "您输入的型号已经存在");exit;
-		}
-		if($this->input->post())
-		if($_FILES["userfile"]['name'] and $this->input->post('old_img')){//修改上传的图片，需要先删除原来的图片
-			@unlink('./././uploadfiles/product/'.$this->input->post('old_img'));//del old img
-		}else if(!$_FILES["userfile"]['name'] and !$this->input->post('old_img')){//未上传图片
-			form_submit_json("300", "请添加图片");exit;
-		}
-	
-		if(!$_FILES["userfile"]['name'] and $this->input->post('old_img')){//不修改图片信息
-			$data = $this->input->post();
-			unset($data['ajax']);
-			unset($data['old_img']);
-			$rs = $this->manage_model->save_product($data);
-		}else{
-			$config['upload_path'] = './././uploadfiles/product';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$config['max_size'] = '1000';
-			$config['encrypt_name'] = true;
-			$this->load->library('upload', $config);
-			if($this->upload->do_upload()){
-				$img_info = $this->upload->data();
-				$data = $this->input->post();
-				$data['pic'] = $img_info['file_name'];
-				unset($data['ajax']);
-				unset($data['old_img']);
-				$rs = $this->manage_model->save_product($data);
-			}else{
-				form_submit_json("300", $this->upload->display_errors('<b>','</b>'));
-				exit;
-			}
-		}
-	
+		$rs = $this->manage_model->save_product();
 		if ($rs === 1) {
 			form_submit_json("200", "操作成功", "list_product");
 		} else {
@@ -136,33 +167,49 @@ class Manage extends MY_Controller {
 		}
 	}
 
-	public function list_production(){
-		$data = $this->manage_model->list_production();
-		$this->load->view('manage/list_production.php',$data);
+	//产品类别
+	public function list_product_type(){
+		$data = $this->manage_model->list_product_type();
+		if($data['res_list'])
+			$data['res_list'] = $this->subtree($data['res_list']);
+		$this->load->view('manage/list_product_type.php',$data);
 	}
 
-	public function add_production(){
-		$this->load->view('manage/add_production.php');
+	public function add_product_type(){
+		$data['type_list'] = $this->get_all_product_type(null);
+		$this->load->view('manage/add_product_type.php',$data);
 	}
 
-	public function get_size($num){
-		$data = $this->manage_model->get_size($num);
-		echo json_encode($data);
-	}
-
-	public function save_production(){
-		$rs = $this->manage_model->save_production();
+	public function delete_product_type($id){
+		$rs = $this->manage_model->delete_product_type($id);
 		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_production");
+			form_submit_json("200", "操作成功", "list_product_type", "", "");
 		} else {
 			form_submit_json("300", $rs);
 		}
 	}
 
-	public function edit_production($id){
-		$data = $this->manage_model->get_production($id);
-		$this->load->view('manage/add_production.php',$data);
+	public function edit_product_type($id){
+		$data = $this->manage_model->get_product_type($id);
+		$data['type_list'] = $this->get_all_product_type($id);
+		$this->load->view('manage/add_product_type.php',$data);
 	}
+
+	public function save_product_type(){
+		$rs = $this->manage_model->save_product_type();
+		if ($rs === 1) {
+			form_submit_json("200", "操作成功", "list_product_type");
+		} else {
+			form_submit_json("300", $rs);
+		}
+	}
+
+	//用于选择上级类别,如果存在id，则不取存在的类别，避免出现自己的上级目录是自己的死循环状况
+	public function get_all_product_type($id){
+		$data = $this->manage_model->get_all_product_type($id);
+		return $data;
+	}
+
 
 	public function delete_production($id){
 		$rs = $this->manage_model->delete_production($id);
@@ -176,90 +223,23 @@ class Manage extends MY_Controller {
 		}
 	}
 
-	//包装入库
-	public function stock_in(){
-		$rs = $this->manage_model->stock_in();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_stock_log");
-		} else {
-			form_submit_json("300", $rs);
+	/**
+	 * 树状结构菜单
+	 **/
+	public function subtree($arr,$id=0,$lev=1)
+	{
+		static $subs = array();
+		foreach($arr as $v){
+			if((int)$v['parent_id']==$id){
+				$v['lev'] = $lev;
+				$subs[]=$v;
+				$this->subtree($arr,$v['id'],$lev+1);
+			}
 		}
+		return $subs;
 	}
 
-	public function list_stock_log(){
-		$data = $this->manage_model->list_stock_log();
-		$this->load->view('manage/list_stock_log.php',$data);
-	}
 
-	public function add_stock_in(){
-		$this->load->view('manage/add_stock_in.php');
-	}
-
-	public function list_production_dialog(){
-		$data = $this->manage_model->list_production(1);
-		$this->load->view('manage/list_production_dialog.php',$data);
-	}
-
-	public function get_production($id){
-		$data = $this->manage_model->get_production($id);
-		echo json_encode($data);
-	}
-
-	public function list_users(){
-		$data = $this->manage_model->list_users();
-		$this->load->view('manage/list_users.php',$data);
-	}
-
-	public function add_user(){
-		$this->load->view('manage/add_user.php');
-	}
-
-	public function save_user(){
-		$rs = $this->manage_model->save_user();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_users");
-		} elseif($rs == -2){
-			form_submit_json("300", '该用户已经存在');
-		}else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function reset_pwd($id){
-		$rs = $this->manage_model->reset_pwd($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_users", "", "");
-		}else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function disable_user($id){
-		$rs = $this->manage_model->disable_user($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_users", "", "");
-		}else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function list_cust(){
-		$data = $this->manage_model->list_cust();
-		$this->load->view('manage/list_cust.php',$data);
-	}
-
-	public function add_cust(){
-		$this->load->view('manage/add_cust.php');
-	}
-
-	public function save_cust(){
-		$rs = $this->manage_model->save_cust();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_cust");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
 
 
 
