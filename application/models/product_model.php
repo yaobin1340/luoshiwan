@@ -9,14 +9,72 @@ if (! defined('BASEPATH'))
  */
 class Product_model extends MY_Model
 {
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
     }
 
-    public function __destruct()
-    {
+    public function __destruct(){
         parent::__destruct();
     }
 
+    public function get_product_recommend(){
+         $data=$this->db->select('a.*,min(b.price) price')->from('product a')
+             ->join('product_detail b','a.id = b.pid','left')
+             ->where('recommend',1)
+             ->where('status',1)
+             ->group_by('a.id')
+             ->get()->result_array();
+        if (!$data){
+            return 1;
+        }
+        return $data;
+    }
+
+    public function get_product_type(){
+        $data=$this->db->select()->from('product_type')
+            ->get()->result_array();
+        if (!$data){
+            return 1;
+        }
+        return $data;
+    }
+
+    public function get_product_list($id,$flag){
+        $row=$this->db->select()->from('product_type')->where('id',$id)->get()->row_array();
+         $this->db->select('a.*,min(b.price) price')->from('product a')
+            ->join('product_detail b','a.id = b.pid','left')
+             ->where(array(
+                 'status'=>1,
+                 'recommend'=>1,
+                 'type'=>$id
+             ));
+        switch ($flag){
+            case 1:
+                break;
+            case 2:
+
+                break;
+            case 3:
+                $this->db->order_by('price','desc');
+                break;
+            case 4:
+                $this->db->order_by('price','asc');
+                break;
+            default:
+        }
+        $res=$this->db
+            ->group_by('a.id')
+            ->limit(2)
+            ->get()->result_array();
+        if (!$res){
+            $data['items']= 1;
+        }
+       /* echo $this->db->last_query();
+        die(var_dump($res));*/
+        $data['type_id']=$id;
+        $data['flag']=$flag;
+        $data['items']= $res;
+        $data['title']=$row['name'];
+        return $data;
+    }
 }

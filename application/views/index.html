@@ -8,7 +8,7 @@
  	<li> <a href="{{site_url url='product/product_main'}}">
         <img src="../res/images/icon_shangpin.png"><span>所有商品</span><div class="bottom_line"></div>
     </a></li>
- 	<li> <a href="{{site_url url='product/product_list'}}">
+ 	<li> <a href="{{site_url url='product/product_type'}}">
         <img src="../res/images/icon_fenglei.png"><span>分类</span><div class="bottom_line"></div>
     </a></li>
  	<li></li>
@@ -23,10 +23,12 @@
     </div>
     <!--首页推荐产品开始-->
     <ul class="index_list">
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></a></li>
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></a></li>
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></a></li>
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></a></li>
+
+        {{if $data!=1}}
+        {{foreach from=$data item=foo}}
+        <li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
+        {{/foreach}}
+        {{/if}}
     </ul>
  </div>
  <!--购物车按钮开始-->

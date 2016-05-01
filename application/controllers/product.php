@@ -15,6 +15,8 @@ class Product extends MY_Controller
     }
 
     function index(){
+        $data=$this->product_model->get_product_recommend();
+        $this->cismarty->assign('data',$data);
         $this->cismarty->display('index.html');
     }
     
@@ -22,11 +24,19 @@ class Product extends MY_Controller
         $this->cismarty->display('product.html');
     }
     
-    function product_list(){
+    function product_list($id,$flag=1){
+        $data=$this->product_model->get_product_list($id,$flag);
+        $this->cismarty->assign('data',$data);
         $this->cismarty->display('product_list.html');
     }
 
     function product_info(){
         $this->cismarty->display('product_info.html');
+    }
+
+    function product_type(){
+        $data=$this->product_model->get_product_type();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('prt_type.html');
     }
 }
