@@ -7,7 +7,7 @@ if (! defined('BASEPATH'))
  * Date: 2016/5/1
  * Time: 11:51
  */
-class Product_model extends MY_Model
+class Ajax_model extends MY_Model
 {
     public function __construct(){
         parent::__construct();
@@ -17,14 +17,13 @@ class Product_model extends MY_Model
         parent::__destruct();
     }
 
-    function get_product($type,$flag,$page,$limit){
+    function get_product($flag,$page,$type,$limit){
         $this->db->select('a.*,min(b.price) price')->from('product a')
             ->join('product_detail b','a.id = b.pid','left')
-            ->where(array(
-                'status'=>1,
-                'recommend'=>1,
-                'type'=>$type
-            ));
+            ->where('status',1);
+        if ($type!=-1){
+            $this->db->where('type',$type);
+        }
         switch ($flag){
             case 1:
                 break;

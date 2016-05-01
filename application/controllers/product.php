@@ -20,7 +20,9 @@ class Product extends MY_Controller
         $this->cismarty->display('index.html');
     }
     
-    function product_main(){
+    function product_main($flag=1){
+        $data=$this->product_model->get_product_main($flag);
+        $this->cismarty->assign('data',$data);
         $this->cismarty->display('product.html');
     }
     

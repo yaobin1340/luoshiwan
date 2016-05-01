@@ -14,8 +14,8 @@ class Ajax extends MY_Controller
         $this->load->model('ajax_model');
     }
 
-   function get_product($type,$flag,$page=1,$limit=2){
-       $data=$this->ajax_model->get_product($type,$flag,$page,$limit);
+   function get_product($flag,$page=2,$type=-1,$limit=6){
+       $data=$this->ajax_model->get_product($flag,$page,$type,$limit);
        echo json_encode($data);
    }
 }

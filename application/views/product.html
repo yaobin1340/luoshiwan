@@ -1,15 +1,15 @@
 {{include file="head.html"}}
  <ul class="top_menu"> 
  	<li> <a href="{{site_url url='product/index'}}">
-        <img src="../res/images/icon_shouye.png"><span >商城首页</span><div class="bottom_line"></div>
+        <img src="/res/images/icon_shouye.png"><span >商城首页</span><div class="bottom_line"></div>
     </a>
     </li>
  	<li><a href="{{site_url url='product/product_main'}}">
-        <img src="../res/images/icon_shangpin_on.png"><span class="color_on">所有商品</span><div class="bottom_line on"></div>
+        <img src="/res/images/icon_shangpin_on.png"><span class="color_on">所有商品</span><div class="bottom_line on"></div>
     </a>
     </li>
  	<li><a href="{{site_url url='product/product_type'}}">
-        <img src="../res/images/icon_fenglei.png"><span>分类</span><div class="bottom_line"></div>
+        <img src="/res/images/icon_fenglei.png"><span>分类</span><div class="bottom_line"></div>
     </a></li>
  	<li></li>
  </ul>
@@ -18,37 +18,68 @@
  <div class="main" style="margin-top:0">
  	<!--综合排序开始-->
     <div class="prt_select">
-    	 <div class="prt_select_title"><span>综合排序</span><img src="../res/images/icon_arrow_down.png"></div>
+    	 <div class="prt_select_title"><span>
+               {{if $data['flag']==1}}综合排序{{/if}}
+             {{if $data['flag']==2}}销量从高到低{{/if}}
+             {{if $data['flag']==3}}价格从高到低{{/if}}
+             {{if $data['flag']==4}}价格从低到高{{/if}}
+         </span><img src="/res/images/icon_arrow_down.png"></div>
     </div>
     <!--首页推荐产品开始-->
-    <ul class="index_list">
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></a></li>
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></a></li>
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt_a.jpg"></div><span class="prt_pirce">￥30.9</span><span class="prt_title">苏北猪大腿</span></a></li>
-    	<li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../res/images/prt.jpg"></div><span class="prt_pirce">￥10.9</span><span class="prt_title">野生鲫鱼</span></a></li>
+    <ul class="index_list" id="product_ul">
+        {{if $data['items']!=1}}
+        {{foreach from=$data['items'] item=foo}}
+        <li><a href="{{site_url url='product/product_info'}}/{{$foo['id']}}"><div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
+        {{/foreach}}
+        {{/if}}
     </ul>
-    <span class="load_more">载入更多...</span>
+    <span class="load_more" id="get_product">载入更多...</span>
+     <input type="hidden" name="page" id="page" value="2">
  </div>
  <!--购物车按钮开始-->
- <div class="menu_cart"><img src="../res/images/icon_gouwuche.png"></div>
+ <div class="menu_cart"><img src="/res/images/icon_gouwuche.png"></div>
  <!--下拉菜单开始-->
  <ul class="prtselect_list">
-   <li>综合排序</li>
-   <li>销量从高到低</li>
-   <li>价格从高到低</li>
-   <li>价格从低到高</li>
+     <li><a href="{{site_url url='product/product_main'}}/1">综合排序</a></li>
+     <li> <a href="{{site_url url='product/product_main'}}/2">销量从高到低</a></li>
+     <li> <a href="{{site_url url='product/product_main'}}/3">价格从高到低</a></li>
+     <li> <a href="{{site_url url='product/product_main'}}/4">价格从低到高</a></li>
  </ul>
 </body>
-<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
-<script type="text/javascript" src="../res/js/topmenu.js"></script>
-<script type="text/javascript" src="../res/js/boxslide.js"></script>
-<script type="text/javascript" src="../res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
 <script type="text/javascript">
 $(function(){
           $(".prt_select").on("tap",function(){
           	 $(".prtselect_list").toggleClass("on");
           });
+
+    $("#get_product").click(function () {
+        var page=$("#page").val();
+        $.getJSON("{{site_url url='ajax/get_product'}}/{{$data['flag']}}/"+page,function(data){
+            html='';
+            path="{{site_url url='product/product_info'}}";
+            if (data!=1){
+                data.forEach(function (item) {
+                    html+='<li>'
+                    html+= '<a href="'+path+'/'+item.id+'">'
+                    html+='<div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/'+item.bg_pic+'"></div>'
+                    html+='<span class="prt_pirce">￥'+item.price+'</span><span class="prt_title">'+item.name+'</span></a></li>'
+                })
+                $("#product_ul").append(html);
+                pageint=parseInt(page)+1;
+                $("#page").val(pageint);
+
+            }
+            else{
+                $("#get_product").html('已无更多信息')
+            }
+
+        });
+    })
 });
 </script>
 </html>

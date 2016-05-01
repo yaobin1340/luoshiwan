@@ -45,7 +45,6 @@ class Product_model extends MY_Model
             ->join('product_detail b','a.id = b.pid','left')
              ->where(array(
                  'status'=>1,
-                 'recommend'=>1,
                  'type'=>$id
              ));
         switch ($flag){
@@ -64,7 +63,7 @@ class Product_model extends MY_Model
         }
         $res=$this->db
             ->group_by('a.id')
-            ->limit(2)
+            ->limit(6)
             ->get()->result_array();
         if (!$res){
             $data['items']= 1;
@@ -75,6 +74,41 @@ class Product_model extends MY_Model
         $data['flag']=$flag;
         $data['items']= $res;
         $data['title']=$row['name'];
+        return $data;
+    }
+
+    public function get_product_main($flag){
+
+        $this->db->select('a.*,min(b.price) price')->from('product a')
+            ->join('product_detail b','a.id = b.pid','left')
+            ->where(array(
+                'status'=>1
+            ));
+        switch ($flag){
+            case 1:
+                break;
+            case 2:
+
+                break;
+            case 3:
+                $this->db->order_by('price','desc');
+                break;
+            case 4:
+                $this->db->order_by('price','asc');
+                break;
+            default:
+        }
+        $res=$this->db
+            ->group_by('a.id')
+            ->limit(6)
+            ->get()->result_array();
+        if (!$res){
+            $data['items']= 1;
+        }
+        /* echo $this->db->last_query();
+         die(var_dump($res));*/
+        $data['flag']=$flag;
+        $data['items']= $res;
         return $data;
     }
 }

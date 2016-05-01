@@ -15,7 +15,7 @@
          </span><img src="/res/images/icon_arrow_down.png"></div>
     </div>
     <!--首页推荐产品开始-->
-    <ul class="index_list">
+    <ul class="index_list" id="product_ul">
         {{if $data['items']!=1}}
         {{foreach from=$data['items'] item=foo}}
         <li><a href="{{site_url url='product/product_info'}}/{{$foo['id']}}"><div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
@@ -24,7 +24,7 @@
 
     </ul>
     <span class="load_more" id="get_product">载入更多...</span>
-     <input type="hidden" name="page" id="page" value="1">
+     <input type="hidden" name="page" id="page" value="2">
  </div>
  <!--购物车按钮开始-->
  <div class="menu_cart"><img src="/res/images/icon_gouwuche.png"></div>
@@ -50,18 +50,25 @@ $(function(){
           });
     
     $("#get_product").click(function () {
+
         var page=$("#page").val();
-        $.getJSON("{{site_url url='ajax/get_product'}}/{{$data['type_id']}}/{{$data['flag']}}/"+page,function(data){
+        alert("{{site_url url='ajax/get_product'}}/{{$data['flag']}}/"+page+"/{{$data['type_id']}}")
+        $.getJSON("{{site_url url='ajax/get_product'}}/{{$data['flag']}}/"+page+"/{{$data['type_id']}}",function(data){
             html='';
+            path="{{site_url url='product/product_info'}}";
             if (data!=1){
                 data.forEach(function (item) {
-                    html+=''
+                    html+='<li>'
+                    html+= '<a href="'+path+'/'+item.id+'">'
+                    html+='<div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/'+item.bg_pic+'"></div>'
+                        html+='<span class="prt_pirce">￥'+item.price+'</span><span class="prt_title">'+item.name+'</span></a></li>'
                 })
-            }else{
-
+                $("#product_ul").append(html);
+                pageint=parseInt(page)+1;
+                $("#page").val(pageint);
+            } else{
+                $("#get_product").html('已无更多信息')
             }
-
-
 
         });
     })
