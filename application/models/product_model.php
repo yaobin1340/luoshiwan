@@ -113,7 +113,11 @@ class Product_model extends MY_Model
     }
 
     public function get_product_info($id){
-       $info = $this->db->select()->from('product')->where('id',$id)->get()->row_array();
+       $info = $this->db->select('a.*,min(b.price) price,b.s_price s_price,b.size')->from('product a')
+           ->join('product_detail b','a.id = b.pid','left')
+           ->where(array(
+               'a.id'=>$id
+           ))->get()->row_array();
         $details=$this->db->select()->from('product_detail')->where('pid',$id)->order_by('price','asc')->get()->result_array();
         $type=$this->db->select()->from('product_type')->where('id',$info['type'])->get()->row_array();
         if (!$info){

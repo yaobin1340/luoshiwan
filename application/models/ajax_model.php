@@ -47,4 +47,20 @@ class Ajax_model extends MY_Model
             return $res;
         }
     }
+
+    function save_cart($openid,$qty,$pid,$pd_id){
+        $openid=$this->session->userdata('openid');
+        $data=array(
+            'openid'=>$openid,
+            'pid'=>$pid,
+            'pd_id'=>$pd_id,
+            'qty'=>$qty
+        );
+        $res = $this->db->insert('cart',$data);
+        if (!$res){
+           return -1;
+        }else{
+            return 1;
+        }
+    }
 }

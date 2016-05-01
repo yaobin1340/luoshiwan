@@ -5,13 +5,16 @@
 	<div class="prt_property_info">
 	   <img src="/res/images/icon_close.png" class="close_btm">
        <span class="open_slt_title">产品标题</span>
-       <span class="open_slt_price">￥98.8</span>
+       <span class="open_slt_price"></span>
        <span class="open_slt_protitle">选择属性</span>
        <div class="open_slt_content">
        	  <ul>
               {{if $data['details']!=1}}
               {{foreach from=$data['details'] item=foo}}
-              <li>{{$foo['size']}}</li>
+              <li><flag>{{$foo['size']}}</flag>
+                  <detailid style="display: none">{{$foo['id']}}</detailid>
+              <input type="hidden" name="price" value="{{$foo['price']}}">
+              </li>
               {{/foreach}}
               {{/if}}
        	  </ul>
@@ -21,7 +24,7 @@
        	  <div class="btn_add" >
 		    <a href="#" class="arrow click_subtract"><img src="/res/images/icon_jia.jpg"></a>
 		        <span class="viewnum" id="qty_v" style="display:none;">1</span>
-		        <input type="text"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
+		        <input type="text" id="buy_qty"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
 		    <a href="#" class="arrow click_add"><img src="/res/images/icon_jian.jpg"></a>
 	      </div>
        </div>
@@ -50,10 +53,11 @@
     </div>
     <div class="prt_header">
       <h3>{{if $data['info']!=1}}{{$data['info']['name']}}{{/if}}</h3>
-      <span class="price_all">￥90.8</span>      
+      <span class="price_all">{{if $data['info']!=1}}{{$data['info']['price']}}{{/if}}</span>
     </div>
-    <div class="ems"><span>运费</span>包邮</div>
-    <div class="prt_type">选择颜色分类<img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;"></div>
+    <div class="ems">
+         包邮</div>
+    <div class="prt_type"><img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;"></div>
     <div class="prt_info">
     	<span class="xiangqing">详情</span>
         {{if $data['info']!=1}}{{$data['info']['desc']}}{{/if}}
@@ -61,7 +65,7 @@
  </div>
   <!--底部菜单开始-->
   <ul class="bottom_menu">
-  	<li>加入购物车</li>
+  	<li id="save_cart">加入购物车</li>
   	<li>立即购买</li>
   </ul>
 </body>
@@ -86,13 +90,31 @@ $(function(){
           	 $(".prt_property").removeClass("on");
           	 $(".prt_property_info").removeClass("pt-page-moveFromBottom");
           });
+
+   $(".open_slt_content li").eq(0).addClass("order_active");
+    var minprice =$(".open_slt_content li").eq(0).find('input').val();
+    $(".open_slt_price").html(minprice);
+    $(".prt_type").html($(".open_slt_content li").eq(0).find('flag').html()+'<img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;">')
+
           $(".open_slt_content li").each(function(){
           	$(this).on('tap',function(){
           		$(this).addClass("order_active");
           		$(this).siblings().removeClass("order_active");
+                var price =$(this).find('input').val();
+                $(".open_slt_price").html(price);
           	});
           });
 
+    $(".open_slt_submit").click(function () {
+        var _qty = $("#buy_qty").val();
+        var _price=$(".open_slt_price").html();
+        all_price=parseInt(_qty)*parseFloat(_price);
+        $(".price_all").html(all_price);
+        $(".prt_type").html( $(".order_active").eq(0).find('flag').html()+'<img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;">')
+        $(".prt_property").removeClass("on");
+        $(".prt_property_info").removeClass("pt-page-moveFromBottom");
+
+    })
     $.getJSON("{{site_url url='ajax/get_pics'}}/{{if $data['info']!=1}}{{$data['info']['folder']}}{{/if}}",function(data){
         html='';
         if (data['img']!=1){
@@ -113,6 +135,20 @@ $(function(){
             autoStart: true,
         });
     });
+    
+    $("#save_cart").click(function () {
+        var openid='123';
+        var save_qty=$("#buy_qty").val();
+        var pid="{{if $data['info']!=1}}{{$data['info']['id']}}{{/if}}";
+        var pd_id=$(".open_slt_content li").eq(0).find('detailid').html();
+        $.getJSON("{{site_url url='ajax/save_cart'}}/"+openid+"/"+save_qty+"/"+pid+"/"+pd_id,function(data){
+         if (data==1){
+                alert('加入成功！');
+            }else{
+                 alert('加入失败！');
+            }
+        });
+    })
 });
 </script>
 </html>
