@@ -39,4 +39,14 @@ class Ajax extends MY_Controller
         $data=$this->ajax_model->save_cart($openid,$qty,$pid,$pd_id);
         echo json_encode($data);
     }
+
+    function delete_cart($id){
+        $data=$this->ajax_model->delete_cart($id);
+        echo json_encode($data);
+    }
+
+    function change_cart($id,$qty){
+        $data=$this->ajax_model->change_cart($id,$qty);
+        echo json_encode($data);
+    }
 }

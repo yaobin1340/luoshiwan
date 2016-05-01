@@ -1,97 +1,45 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" type="text/css" href="../res/css/shop/style.css" />
-<link rel="stylesheet" type="text/css" href="../res/css/shop/jquery.bxslider.css" />
-<link rel="stylesheet" type="text/css" media="screen and (max-width: 480px)" href="../res/css/css_app.css" />
-<link rel="stylesheet" type="text/css" media="screen and (min-width: 480px)" href="../res/css/css_pc.css" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<title>螺蛳湾商城</title>
-</head>
-<body>
-<!--头部开始-->
- <div class="header">
-  <img src="../res/images/logo.jpg" class="img_logo">
- </div>
- <img src="../res/images/btn_more.png" class="img_btn_more">
- <ul class="top_menu"> 
-   <div class="menu_content">购物车(3)<img src="../res/images/arrow_pre.png" class="back_icon"></div>
+{{include file="head.html"}}
+ <ul class="top_menu">
+	 <a href="{{site_url url='product/index'}}">
+		 <div class="menu_content">购物车(<car_num>{{$data['num']}}</car_num>)<img src="/res/images/arrow_pre.png" class="back_icon"></div>
+		 </a>
  </ul>
  <!--内容开始-->
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
     <ul class="cart_list">
-    	<li>
-    		<label class="input_cart"><input name="checkbox" type="checkbox" value="" ></label>
-    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
-    		<span class="cart_title">苏北野生大鲤鱼</span>
-    		<span class="cart_spec">600克/条</span>
-    		<div class="cart_price">
-    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
-    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
-    		</div>
-    		<div class="del_btn">编辑</div>
-    		<div class="edit_div">
-	    	   <div class="cart_btn_add" >
-				    <a href="#" class="arrow click_subtract"><img src="../res/images/icon_jia.jpg"></a> 
-				        <input type="text"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
-				    <a href="#" class="arrow click_add"><img src="../res/images/icon_jian.jpg"></a>
-		       </div>
-		       <span class="cart_spec_edit">600克/条</span>
-		       <div class="cart_right">
-                   <div class="cart_right_part over">完成</div>
-                   <div class="cart_right_part del">删除</div>
-		       </div>
-    		</div>
-    	</li>
-    	<li>
-    		<label class="input_cart"><input name="checkbox" type="checkbox" value=""></label>
-    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
-    		<span class="cart_title">苏北野生大鲤鱼</span>
-    		<span class="cart_spec">600克/条</span>
-    		<div class="cart_price">
-    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
-    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
-    		</div>
-    		<div class="del_btn">编辑</div>
-    		<div class="edit_div">
-	    	   <div class="cart_btn_add" >
-				    <a href="#" class="arrow click_subtract"><img src="../res/images/icon_jia.jpg"></a> 
-				        <input type="text"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
-				    <a href="#" class="arrow click_add"><img src="../res/images/icon_jian.jpg"></a>
-		       </div>
-		       <span class="cart_spec_edit">600克/条</span>
-		       <div class="cart_right">
-                   <div class="cart_right_part over">完成</div>
-                   <div class="cart_right_part del">删除</div>
-		       </div>
-    		</div>
-    	</li>
-    	<li>
-    		<label class="input_cart"><input name="checkbox" type="checkbox" value=""></label>
-    		<div class="cart_pic"><img src="../res/images/prt.jpg"></div>
-    		<span class="cart_title">苏北野生大鲤鱼</span>
-    		<span class="cart_spec">600克/条</span>
-    		<div class="cart_price">
-    			<span class="cart_price_show">￥<span class="price_num">23.5</span></span>
-    			<span class="cart_num_show">x <span class="prt_num">1</span></span>
-    		</div>
-    		<div class="del_btn">编辑</div>
-    		<div class="edit_div">
-	    	   <div class="cart_btn_add" >
-				    <a href="#" class="arrow click_subtract"><img src="../res/images/icon_jia.jpg"></a> 
-				        <input type="text"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
-				    <a href="#" class="arrow click_add"><img src="../res/images/icon_jian.jpg"></a>
-		       </div>
-		       <span class="cart_spec_edit">600克/条</span>
-		       <div class="cart_right">
-                   <div class="cart_right_part over">完成</div>
-                   <div class="cart_right_part del">删除</div>
-		       </div>
-    		</div>
-    	</li>
+		{{if $data['item']!=0}}
+		{{foreach from=$data['item'] item=foo}}
+		<li>
+			<label class="input_cart"><input name="checkbox" type="checkbox" value="" ></label>
+			<div class="cart_pic"><img src="/res/images/prt.jpg"></div>
+			<span class="cart_title">{{$foo['pro_name']}}</span>
+			<span class="cart_spec">{{$foo['de_size']}}</span>
+			<div class="cart_price">
+				<span class="cart_price_show">￥<span class="price_num">{{$foo['de_price']}}</span></span>
+				<span class="cart_num_show">x <span class="prt_num">{{$foo['qty']}}</span></span>
+			</div>
+			<div class="del_btn">编辑</div>
+			<div class="edit_div">
+				<div class="cart_btn_add" >
+					<a href="#" class="arrow click_subtract"><img src="/res/images/icon_jia.jpg"></a>
+					<input type="text"  name="qty" value="{{$foo['qty']}}" class="viewnum qty" style="width:30px; padding:0">
+					<a href="#" class="arrow click_add"><img src="/res/images/icon_jian.jpg"></a>
+				</div>
+				<span class="cart_spec_edit">{{$foo['de_size']}}</span>
+				<div class="cart_right">
+					<div class="cart_right_part over" name="save_cart[]">完成
+						<input type="hidden" value="{{$foo['id']}}">
+					</div>
+					<div class="cart_right_part del" name="delete_cart[]">删除
+					<input type="hidden" value="{{$foo['id']}}">
+					</div>
+				</div>
+			</div>
+		</li>
+		{{/foreach}}
+		{{/if}}
+
+
     </ul>
  </div>
   <!--底部菜单开始-->
@@ -103,12 +51,12 @@
   	<li style=" position:relative; width: 34%;">结算(<span class="sl_ck">0</span>)</li>
   </ul>
 </body>
-<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
-<script type="text/javascript" src="../res/js/topmenu.js"></script>
-<script type="text/javascript" src="../res/js/boxslide.js"></script>
-<script type="text/javascript" src="../res/js/lazyload.js"></script>
-<script type="text/javascript" src="../res/js/price_order.js"></script>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/price_order.js"></script>
 <script type="text/javascript">
 $(function(){
       $(".input_cart_all input").click(function(){
@@ -122,6 +70,31 @@ $(function(){
       	 check_num();
       }
       });
+
+	$("[name='delete_cart[]']").click(function () {
+		var car_id=$(this).find('input').eq(0).val();
+		var delete_li =  $(this).parent().parent().parent();
+		$.getJSON("{{site_url url='ajax/delete_cart'}}/"+car_id,function(data){
+             if(data==-1){
+				 alert('删除失败！');
+			 }else{
+				 delete_li.remove();
+				 $("car_num").html(data);
+			 }
+		});
+	})
+
+	$("[name='save_cart[]']").click(function () {
+		var car_id=$(this).find('input').eq(0).val();
+		var save_qty =  $(this).parent().parent().find("[name='qty']").eq(0).val();
+		$.getJSON("{{site_url url='ajax/change_cart'}}/"+car_id+"/"+save_qty,function(data){
+			if(data==-1){
+				alert('存储失败！');
+			}else{
+
+			}
+		});
+	})
 });
 </script>
 </html>

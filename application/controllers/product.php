@@ -44,4 +44,10 @@ class Product extends MY_Controller
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('prt_type.html');
     }
+
+    function show_cart(){
+        $data=$this->product_model->show_cart();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('cart.html');
+    }
 }

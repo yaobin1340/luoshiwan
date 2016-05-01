@@ -137,4 +137,25 @@ class Product_model extends MY_Model
         }
         return $data;
     }
+
+    function show_cart(){
+        $openid=$this->session->userdata('openid');
+       $res = $this->db->select('count(1) num')->from('cart')->where('openid',$openid)->get()->row_array();
+        if (!$res){
+            $data['num']=0;
+        }else{
+            $data['num']=$res['num'];
+        }
+    $detail = $this->db->select('a.*,b.id pro_id,b.name pro_name,b.bg_pic,c.size de_size,c.price de_price')->from('cart a')
+    ->join('product b','a.pid = b.id','left')
+    ->join('product_detail c','a.pd_id = c.id','left')
+    ->where('a.openid',$openid)
+    ->get()->result_array();
+        if (!$detail){
+            $data['item']=1;
+        }else{
+            $data['item']=$detail;
+        }
+       return $data;
+    }
 }

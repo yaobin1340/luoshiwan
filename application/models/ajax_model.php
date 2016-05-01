@@ -63,4 +63,28 @@ class Ajax_model extends MY_Model
             return 1;
         }
     }
+
+    function delete_cart($id){
+        $openid=$this->session->userdata('openid');
+       $res = $this->db->where('id',$id)->delete('cart');
+        if (!$res){
+            return -1;
+        }else{
+            $num = $this->db->select('count(1) num')->from('cart')->where('openid',$openid)->get()->row_array();
+            if (!$num){
+                return 0;
+            }else{
+                return $num['num'];
+            }
+        }
+    }
+
+    function change_cart($id,$qty){
+       $res = $this->db->where('id',$id)->update('cart',array('qty'=>$qty));
+        if (!$res){
+            return -1;
+        }else{
+            return 1;
+        }
+    }
 }
