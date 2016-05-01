@@ -111,4 +111,26 @@ class Product_model extends MY_Model
         $data['items']= $res;
         return $data;
     }
+
+    public function get_product_info($id){
+       $info = $this->db->select()->from('product')->where('id',$id)->get()->row_array();
+        $details=$this->db->select()->from('product_detail')->where('pid',$id)->order_by('price','asc')->get()->result_array();
+        $type=$this->db->select()->from('product_type')->where('id',$info['type'])->get()->row_array();
+        if (!$info){
+            $data['info']=1;
+        }else{
+            $data['info']=$info;
+        }
+        if (!$details){
+            $data['details']=1;
+        }else{
+            $data['details']=$details;
+        }
+        if (!$type){
+            $data['title']=1;
+        }else{
+            $data['title']=$type['name'];
+        }
+        return $data;
+    }
 }

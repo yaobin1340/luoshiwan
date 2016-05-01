@@ -18,4 +18,21 @@ class Ajax extends MY_Controller
        $data=$this->ajax_model->get_product($flag,$page,$type,$limit);
        echo json_encode($data);
    }
+
+    //ajax获取图片信息
+    public function get_pics($time){
+        $this->load->helper('directory');
+        $path = './././uploadfiles/pics/'.$time;
+        $map =directory_map($path);
+        $data = array();
+        //整理图片名字，取缩略图片
+        foreach($map as $v){
+            if(substr(substr($v,0,strrpos($v,'.')),-5) == 'thumb'){
+                $data['img'][] = $v;
+            }
+        }
+        $data['time'] = $time;//文件夹名称
+        echo json_encode($data);
+    }
+
 }

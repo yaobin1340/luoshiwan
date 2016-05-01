@@ -3,25 +3,26 @@
 <div class="prt_property">
 	<div class="prt_property_bg"></div>
 	<div class="prt_property_info">
-	   <img src="../res/images/icon_close.png" class="close_btm">
+	   <img src="/res/images/icon_close.png" class="close_btm">
        <span class="open_slt_title">产品标题</span>
        <span class="open_slt_price">￥98.8</span>
        <span class="open_slt_protitle">选择属性</span>
        <div class="open_slt_content">
        	  <ul>
-       	  	<li>一箱5斤一箱5斤一箱5斤一箱5斤</li>
-       	  	<li>二箱10斤二箱10斤</li>
-       	  	<li>一箱15斤二箱10斤二箱10斤二箱10斤</li>
-       	  	<li>一箱5斤一箱5斤一箱5斤一箱5斤</li>
+              {{if $data['details']!=1}}
+              {{foreach from=$data['details'] item=foo}}
+              <li>{{$foo['size']}}</li>
+              {{/foreach}}
+              {{/if}}
        	  </ul>
        </div>
        <div class="open_slt_num">
        	  <span class="open_slt_protitle">购买数量</span>
        	  <div class="btn_add" >
-		    <a href="#" class="arrow click_subtract"><img src="../res/images/icon_jia.jpg"></a> 
+		    <a href="#" class="arrow click_subtract"><img src="/res/images/icon_jia.jpg"></a>
 		        <span class="viewnum" id="qty_v" style="display:none;">1</span>
 		        <input type="text"  name="qty" value="1" class="viewnum qty" style="width:30px; padding:0">
-		    <a href="#" class="arrow click_add"><img src="../res/images/icon_jian.jpg"></a>
+		    <a href="#" class="arrow click_add"><img src="/res/images/icon_jian.jpg"></a>
 	      </div>
        </div>
        <div class="open_slt_submit">确定</div>
@@ -29,24 +30,33 @@
 </div>
 <!--头部开始-->
  <ul class="top_menu">
-     <a href="{{site_url url='product/product_type'}}"><div class="menu_content">农副产品<img src="../res/images/arrow_pre.png" class="back_icon"></div></a>
+
+     {{if $html_flag==-1}}
+         <a href="{{site_url url='product/index'}}"><div class="menu_content">商场首页<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>
+     {{/if}}
+     {{if $html_flag==-2}}
+     <a href="{{site_url url='product/product_main'}}"><div class="menu_content">所有商品<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>
+     {{/if}}
+     {{if $html_flag > 0}}
+     <a href="{{site_url url='product/product_list'}}/{{$html_flag}}"><div class="menu_content">{{$data['title']}}<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>
+     {{/if}}
+
  </ul>
  <!--内容开始-->
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
  	<!--产品图片滚动开始-->
-    <div class="slider7">
-      <div class="slide"><img src="../res/images/banner.jpg"></div>
-      <div class="slide"><img src="../res/images/banner_1.jpg"></div>
+    <div class="slider7" id="slider_div">
+
     </div>
     <div class="prt_header">
-      <h3>苏北大米苏北大米苏北大米苏北大米</h3>
+      <h3>{{if $data['info']!=1}}{{$data['info']['name']}}{{/if}}</h3>
       <span class="price_all">￥90.8</span>      
     </div>
     <div class="ems"><span>运费</span>包邮</div>
-    <div class="prt_type">选择颜色分类<img src="../res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;"></div>
+    <div class="prt_type">选择颜色分类<img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;"></div>
     <div class="prt_info">
     	<span class="xiangqing">详情</span>
-    	详细内容
+        {{if $data['info']!=1}}{{$data['info']['desc']}}{{/if}}
     </div>
  </div>
   <!--底部菜单开始-->
@@ -55,21 +65,15 @@
   	<li>立即购买</li>
   </ul>
 </body>
-<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
-<script type="text/javascript" src="../res/js/topmenu.js"></script>
-<script type="text/javascript" src="../res/js/boxslide.js"></script>
-<script type="text/javascript" src="../res/js/lazyload.js"></script>
-<script type="text/javascript" src="../res/js/price_order.js"></script>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/price_order.js"></script>
 <script type="text/javascript">
 $(function(){
-           $('.slider7').bxSlider({ 
-            slideWidth: 640, 
-			infiniteLoop: true,
-            controls: false,    
-            auto: true,
-            autoStart: true,
-          });
+
           $(window).load(function(){
           	$(".bx-wrapper").css("margin","0.5rem auto 0 auto");
           });
@@ -88,6 +92,27 @@ $(function(){
           		$(this).siblings().removeClass("order_active");
           	});
           });
+
+    $.getJSON("{{site_url url='ajax/get_pics'}}/{{if $data['info']!=1}}{{$data['info']['folder']}}{{/if}}",function(data){
+        html='';
+        if (data['img']!=1){
+            data['img'].forEach(function (item) {
+              html+='<div class="slide"><img src="/uploadfiles/pics/'+data['time']+'/'+item+'"></div>'
+                //alert(item[0]);
+            })
+            $(".slider7").html(html);
+
+        }
+        else{
+        }
+        $('.slider7').bxSlider({
+            slideWidth: 640,
+            infiniteLoop: true,
+            controls: false,
+            auto: true,
+            autoStart: true,
+        });
+    });
 });
 </script>
 </html>

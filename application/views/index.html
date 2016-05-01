@@ -26,7 +26,7 @@
 
         {{if $data!=1}}
         {{foreach from=$data item=foo}}
-        <li><a href="{{site_url url='product/product_info'}}"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
+        <li><a href="{{site_url url='product/product_info'}}/{{$foo['id']}}/-1"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
         {{/foreach}}
         {{/if}}
     </ul>
