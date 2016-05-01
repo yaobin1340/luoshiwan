@@ -18,15 +18,15 @@
  <div class="main" style="margin-top:0">
  	<!--头部图片滚动开始-->
     <div class="slider7">
-      <div class="slide"><img src="../res/images/banner.jpg"></div>
-      <div class="slide"><img src="../res/images/banner_1.jpg"></div>
+      <div class="slide"><img src="/res/images/banner.jpg"></div>
+      <div class="slide"><img src="/res/images/banner_1.jpg"></div>
     </div>
     <!--首页推荐产品开始-->
     <ul class="index_list">
 
         {{if $data!=1}}
         {{foreach from=$data item=foo}}
-        <li><a href="{{site_url url='product/product_info'}}/{{$foo['id']}}/-1"><div class="prt_send"><img class="lazy" src="../res/images/bx_loader.gif" dataimg="../uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
+        <li><a href="{{site_url url='product/product_info'}}/{{$foo['id']}}/-1"><div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/{{$foo['bg_pic']}}"></div><span class="prt_pirce">￥{{$foo['price']}}</span><span class="prt_title">{{$foo['name']}}</span></a></li>
         {{/foreach}}
         {{/if}}
     </ul>
@@ -34,11 +34,11 @@
  <!--购物车按钮开始-->
 <a href="{{site_url url='product/show_cart'}}"> <div class="menu_cart"><img src="/res/images/icon_gouwuche.png"></div></a>
 </body>
-<script type="text/javascript" src="../res/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../res/js/jquery-finger-0.1.0.min.js"></script>
-<script type="text/javascript" src="../res/js/topmenu.js"></script>
-<script type="text/javascript" src="../res/js/boxslide.js"></script>
-<script type="text/javascript" src="../res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
 <script type="text/javascript">
 $(function(){
            $('.slider7').bxSlider({ 

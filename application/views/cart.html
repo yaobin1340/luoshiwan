@@ -11,7 +11,7 @@
 		{{foreach from=$data['item'] item=foo}}
 		<li>
 			<label class="input_cart"><input name="checkbox" type="checkbox" value="" ></label>
-			<div class="cart_pic"><img src="/res/images/prt.jpg"></div>
+			<div class="cart_pic"><img src="/uploadfiles/pics/{{$foo['bg_pic']}}"></div>
 			<span class="cart_title">{{$foo['pro_name']}}</span>
 			<span class="cart_spec">{{$foo['de_size']}}</span>
 			<div class="cart_price">
