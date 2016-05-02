@@ -33,7 +33,7 @@ class Product extends MY_Controller
     }
 
     function product_info($id,$html_flag=-1){
-        $data=$this->product_model->get_product_info($id,$html_flag);
+        $data=$this->product_model->get_product_info($id);
         $this->cismarty->assign('html_flag',$html_flag);
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('product_info.html');
