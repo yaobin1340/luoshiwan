@@ -1,11 +1,81 @@
 {{include file="head.html"}}
+<!--选择地址开始-->
+<div class="address_list">
+	<div class="header">
+		<img src="../res/images/logo.jpg" class="img_logo">
+	</div>
+	<div class="sladdress_list">
+		<ul>
+			<li>
+				<div class="order_address limit_padding">
+					<img src="../res/images/icon_yes.png" class="icon_next">
+					<div class="sel_address on">
+						<div class="sel_address_top"><span class="mail_name">自提</span><span class="mail_tel"></span></div>
+						<div class="sel_address_bottom"><span class="first_do">[默认]</span>收货地址：<span class="address_eq">江苏省常熟市螺蛳湾文化休闲中心</span></div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="order_address limit_padding">
+					<img src="../res/images/icon_yes.png" class="icon_next hide">
+					<div class="sel_address on">
+						<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+						<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号1</span></div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="order_address limit_padding">
+					<img src="../res/images/icon_yes.png" class="icon_next hide">
+					<div class="sel_address on">
+						<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+						<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号2</span></div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="order_address limit_padding">
+					<img src="../res/images/icon_yes.png" class="icon_next hide">
+					<div class="sel_address on">
+						<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+						<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号3</span></div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="order_address limit_padding">
+					<img src="../res/images/icon_yes.png" class="icon_next hide">
+					<div class="sel_address on">
+						<div class="sel_address_top"><span class="mail_name">鲁锐</span><span class="mail_tel">13915747551</span></div>
+						<div class="sel_address_bottom"><span class="first_do hide">[默认]</span>收货地址：<span class="address_eq">江苏省苏州市昆山前进东路588号4</span></div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="sladdress_add">添加地址</div>
+</div>
  <ul class="top_menu">
 	 <a href="{{site_url url='product/index'}}">
 		 <div class="menu_content">购物车(<car_num>{{$data['num']}}</car_num>)<img src="/res/images/arrow_pre.png" class="back_icon"></div>
 		 </a>
  </ul>
  <!--内容开始-->
+
+
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+
+	 <div class="order_address" id="address" style="display: none">
+		 <img src="../res/images/icon_dibiao.png" class="icon_dibiao">
+		 <img src="../res/images/arrow_next.png" class="icon_next">
+		 <!-- 		<span class="sel_address_title">请选择您的收货地址</span>-->
+		 <div class="sel_address on" id="mail_address_show">
+			 <div class="sel_address_top"><span class="mail_name">自提</span><span class="mail_tel"></span></div>
+			 <div class="sel_address_bottom">收货地址：<span class="address_eq">江苏省常熟市螺蛳湾休闲文化中心</span></div>
+		 </div>
+	 </div>
+
+
     <ul class="cart_list">
 		{{if $data['item']!=1}}
 		{{foreach from=$data['item'] item=foo}}
@@ -41,15 +111,22 @@
 
 
     </ul>
+
  </div>
   <!--底部菜单开始-->
-  <ul class="bottom_menu">
+  <ul class="bottom_menu" id="cart_bottom">
   	<li style=" position:relative; width: 66%; background: #ffffff; height: 2.5rem;">
   		<label class="input_cart_all"><input name="checkbox" type="checkbox" value="0"> <span>全选</span></label>
   		<span class="price_sum">合计：<font>￥</font><span class="price_sum_num">0.0</span></span>
   	</li>
-  	<li style=" position:relative; width: 34%;">结算(<span class="sl_ck">0</span>)</li>
+  	<li style=" position:relative; width: 34%;" id="cart_btn">确认(<span class="sl_ck">0</span>)</li>
   </ul>
+<ul class="bottom_menu" id="order_bottom" style="display: none">
+	<li style=" position:relative; width: 66%; background: #ffffff; height: 2.5rem;">
+		<span class="price_sum">合计：<font>￥</font><span class="price_sum_num">0.0</span></span>
+	</li>
+	<li style=" position:relative; width: 34%;" id="order_btn">结算(<span class="sl_ck">0</span>)</li>
+</ul>
 </body>
 <script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
@@ -59,6 +136,24 @@
 <script type="text/javascript" src="/res/js/price_order.js"></script>
 <script type="text/javascript">
 $(function(){
+	$(".sladdress_list li").each(function(){
+		$(this).click(function(){
+			var v_address=$(this).find(".address_eq").text();
+			var v_name=$(this).find(".mail_name").text();
+			var v_tel=$(this).find(".mail_tel").text();
+			$(this).find(".icon_next").removeClass("hide");
+			$(this).siblings().find(".icon_next").addClass("hide");
+			$("#mail_address_show").find(".address_eq").text(v_address);
+			$("#mail_address_show").find(".mail_name").text(v_name);
+			$("#mail_address_show").find(".mail_tel").text(v_tel);
+			$(".address_list").removeClass("pt-page-moveFromRight");
+		});
+	});
+	$("#address").click(function(){
+		$(".address_list").addClass("pt-page-moveFromRight");
+	});
+
+
       $(".input_cart_all input").click(function(){
       	if($(this).prop("checked")){
       	 $(".cart_list li").find("[name='checkbox']").prop("checked",true);
@@ -94,6 +189,25 @@ $(function(){
 
 			}
 		});
+	})
+
+	$("#cart_btn").click(function () {
+		$(".cart_list li").find("[name='checkbox']").each(function(index) {
+
+			if ($(this).prop("checked")) {
+                  $(this).css('display','none');
+				$(this).parent().parent().find('.del_btn').css('display','none');
+			} else {
+				$(this).parent().parent().remove();
+			}
+		});
+		$("#cart_bottom").css("display","none");
+		$("#order_bottom").css("display","block");
+		$("#address").css("display","block");
+		html='';
+		var cart_path = "{{site_url url='product/show_cart'}}"
+		html+='<a href="'+cart_path+'"><div class="menu_content">返回<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>'
+		$(".top_menu").html(html);
 	})
 });
 </script>
