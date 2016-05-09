@@ -6,7 +6,7 @@ if (! defined('BASEPATH'))
  * User: yangyang
  * Date: 2016/4/29
  * Time: 22:07
- *33
+ *33eee
  */
 class Product_model extends MY_Model
 {
