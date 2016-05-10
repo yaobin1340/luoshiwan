@@ -87,4 +87,31 @@ class Ajax_model extends MY_Model
             return 1;
         }
     }
+
+    public function getprovince(){
+        $data=$this->db->select()->from('province')->get()->result_array();
+        if (!$data){
+            return 1;
+        }else{
+            return $data;
+        }
+    }
+
+    public function getcity($code){
+        $data=$this->db->select()->from('city')->where('provincecode',$code)->get()->result_array();
+        if (!$data){
+            return 1;
+        }else{
+            return $data;
+        }
+    }
+
+    public function getarea($code){
+        $data=$this->db->select()->from('area')->where('citycode',$code)->get()->result_array();
+        if (!$data){
+            return 1;
+        }else{
+            return $data;
+        }
+    }
 }

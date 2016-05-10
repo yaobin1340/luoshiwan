@@ -35,18 +35,39 @@ class Ajax extends MY_Controller
         echo json_encode($data);
     }
 
+    /** 这里保存购物车信息 */
     function save_cart($openid,$qty,$pid,$pd_id){
         $data=$this->ajax_model->save_cart($openid,$qty,$pid,$pd_id);
         echo json_encode($data);
     }
 
+    /** 这里删除购物车信息 */
     function delete_cart($id){
         $data=$this->ajax_model->delete_cart($id);
         echo json_encode($data);
     }
 
+    /** 这里修改购物车信息 做数量的修改 */
     function change_cart($id,$qty){
         $data=$this->ajax_model->change_cart($id,$qty);
+        echo json_encode($data);
+    }
+
+    /** 这里捞取省份信息 */
+    public function getprovince(){
+        $data=$this->ajax_model->getprovince();
+        echo json_encode($data);
+    }
+
+    /** 这里捞取城市信息 */
+    public function getcity($code){
+        $data=$this->ajax_model->getcity($code);
+        echo json_encode($data);
+    }
+
+    /** 这里捞取县区信息 */
+    public function getarea($code){
+        $data=$this->ajax_model->getarea($code);
         echo json_encode($data);
     }
 }

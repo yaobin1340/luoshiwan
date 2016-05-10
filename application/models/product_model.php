@@ -159,6 +159,49 @@ class Product_model extends MY_Model
         }else{
             $data['item']=$detail;
         }
+        $address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
+            ->join('province f','f.code = a.provice_code','left')
+            ->join('city g','g.code = a.city_code','left')
+            ->join('area h','h.code = a.area_code','left')
+            ->where('a.openid',$openid)->get()->result_array();
+        $default_address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
+            ->join('province f','f.code = a.provice_code','left')
+            ->join('city g','g.code = a.city_code','left')
+            ->join('area h','h.code = a.area_code','left')
+            ->where(array(
+                'a.openid'=>$openid,
+                'a.default'=>1
+            ))->get()->row_array();
+        if (!$address){
+            $data['address']=1;
+        }else{
+            $data['address']=$address;
+        }
+        if (!$default_address){
+            $data['default_address']=1;
+        }else{
+            $data['default_address']=$default_address;
+        }
        return $data;
+    }
+
+    function save_address(){
+        $openid=$this->session->userdata('openid');
+        $data=$this->input->post();
+        $data['default'] = $this->input->post('default')? 1 : -1;
+        $data['openid'] = $openid;
+        $this->db->trans_start();
+        if ($this->input->post('default')){
+            $this->db->where('openid',$openid)->update('address',array('default'=> -1));
+            $this->db->insert('address',$data);
+        }else{
+             $this->db->insert('address',$data);
+        }
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

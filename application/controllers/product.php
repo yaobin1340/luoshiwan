@@ -45,9 +45,22 @@ class Product extends MY_Controller
         $this->cismarty->display('prt_type.html');
     }
 
+    /** 这里显示购物车信息 */
     function show_cart(){
         $data=$this->product_model->show_cart();
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('cart.html');
+    }
+
+    /** 这里做地址的处理 */
+    function add_address($type){
+        $this->cismarty->assign('type',$type);
+        $this->cismarty->display('add_address.html');
+    }
+
+    function save_address(){
+      //  die(var_dump($this->input->post())) ;
+       $this->product_model->save_address();
+        $this->show_cart();
     }
 }
