@@ -6,6 +6,7 @@ if (! defined('BASEPATH'))
  * User: yangyang
  * Date: 2016/4/29
  * Time: 22:07
+ *33eee
  */
 class Product_model extends MY_Model
 {
@@ -76,7 +77,7 @@ class Product_model extends MY_Model
         $data['title']=$row['name'];
         return $data;
     }
-
+//
     public function get_product_main($flag){
 
         $this->db->select('a.*,min(b.price) price')->from('product a')
