@@ -10,7 +10,7 @@
 			{{foreach from=$data['address'] item=foo}}
 			<li>
 				<div class="order_address limit_padding">
-					<img src="/res/images/icon_yes.png" class="icon_next {{if $foo['default']!=1}}hide{{/if}}">
+					<img src="/res/images/icon_yes.png" class="icon_next {{if $foo['default']!=1}} hide {{/if}}">
 					<div class="sel_address on">
 						<div class="sel_address_top"><span class="mail_name">
                               {{$foo['name']}}
@@ -223,7 +223,7 @@ $(function(){
 	
 	$("#order_btn").click(function () {
 	   var address_id = $("#mail_address_show").find('input').eq(0).val();
-
+		alert(address_id);
 	})
 });
 </script>

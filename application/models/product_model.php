@@ -164,6 +164,7 @@ class Product_model extends MY_Model
             ->join('city g','g.code = a.city_code','left')
             ->join('area h','h.code = a.area_code','left')
             ->where('a.openid',$openid)->get()->result_array();
+        //die(var_dump($this->db->last_query()));
         $default_address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
             ->join('province f','f.code = a.provice_code','left')
             ->join('city g','g.code = a.city_code','left')
