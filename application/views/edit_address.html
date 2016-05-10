@@ -4,45 +4,46 @@
  </ul>
  <!--内容开始-->
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
- 	<form action="" method="post" enctype="multipart/form-data">
+ 	<form id="save_form" action="{{site_url url='product/save_address'}}" method="post" enctype="multipart/form-data">
+		<input name="id" type="hidden" value="{{if $data!=1}}{{$data['id']}}{{/if}}">
  	<div class="address_part_one">
-		<div class="input_box"><input id="name" name="name" placeholder="姓名" type="text" required class="input_text"></div>
-		<div class="input_box"><input id="phone" name="phone" placeholder="电话" type="text" required class="input_text"></div>
+		<div class="input_box"><input id="name" name="name" placeholder="姓名" type="text" required class="input_text" value="{{if $data!=1}}{{$data['name']}}{{/if}}"></div>
+		<div class="input_box"><input id="phone" name="phone" placeholder="电话" type="text" required class="input_text" value="{{if $data!=1}}{{$data['phone']}}{{/if}}"></div>
  	</div>
  	<div class="address_part_one">
- 		<div class="input_box limit_width">
- 		   <img src="/res/images/icon_arrow_down.png" class="icon_down">
-	       <select name="item" class="select_box">
-	         <option value="0">省份</option>
-	       </select>
- 		</div>
- 		<div class="input_box limit_width">
- 			<img src="../res/images/icon_arrow_down.png" class="icon_down">
-	       <select name="item" class="select_box">
-	         <option value="0">城市</option>
-	       </select>
- 		</div>
- 		<div class="input_box limit_width">
- 			<img src="/res/images/icon_arrow_down.png" class="icon_down">
-	       <select name="item" class="select_box">
-	         <option value="0">县市</option>
-	       </select>
- 		</div>
+		<div class="input_box limit_width">
+			<img src="/res/images/icon_arrow_down.png" class="icon_down">
+			<select name="provice_code" class="select_box"  id="province">
+				<option value="">-请选择省份-</option>
+			</select>
+		</div>
+		<div class="input_box limit_width">
+			<img src="/res/images/icon_arrow_down.png" class="icon_down">
+			<select name="city_code" class="select_box" id="city">
+				<option value="">-请选择城市-</option>
+			</select>
+		</div>
+		<div class="input_box limit_width">
+			<img src="/res/images/icon_arrow_down.png" class="icon_down">
+			<select name="area_code" class="select_box"  id="area">
+				<option value="">-请选择县区-</option>
+			</select>
+		</div>
         <div class="input_box limit_width limit_ht">
-            <textarea name="address" cols="" rows=""  required placeholder="地址详情"></textarea>
+            <textarea id="address" name="address" cols="" rows=""  required placeholder="地址详情">{{if $data!=1}}{{$data['address']}}{{/if}}</textarea>
  		</div>
- 		<div class="input_box limit_width"><input name="myname" placeholder="邮政编码（选题）" type="text" required class="input_text"></div>
+ 		<div class="input_box limit_width"><input id="zip" name="zip" placeholder="邮政编码（选题）" type="text" required class="input_text" value="{{if $data!=1}}{{$data['zip']}}{{/if}}"></div>
  	</div>
  	<div class="address_part_one limint_padding">
  		<span class="check_tile">设为默认</span>
 	    <div class="slideThree">  
-	      <input type="checkbox" value="None" id="slideThree" name="check"  />
-	      <label for="slideThree"></label>
+	      <input type="checkbox" value="None" id="default" name="default" {{if $data!=1}}{{if $data['default']==1}}checked{{/if}}{{/if}} />
+	      <label for="default"></label>
 	    </div>
  	</div>
  	<div class="address_part_one limint_padding">
- 		<input type="button" name="del" value="删除" class="form_del">
- 		<input type="button" name="sumbit" value="保存" class="form_sumbit"></div> 	
+ 		<input type="button" name="del" id="del_btn" value="删除" class="form_del">
+ 		<input type="button" name="sumbit" id="save_btn" value="保存" class="form_sumbit"></div>
  	</form>
  </div>
 </body>
@@ -53,8 +54,111 @@
 <script type="text/javascript" src="/res/js/lazyload.js"></script>
 <script type="text/javascript" src="/res/js/price_order.js"></script>
 <script type="text/javascript">
-$(function(){	
+$(function(){
+	$.getJSON("{{site_url url='ajax/getprovince'}}",function(data){
+		html='<option value="" selected = "selected">-请选择省份-</option>';
+		if (data!=1){
+			data.forEach(function (item) {
+				html+='<option value="'+item.code+'">'+item.name+'</option>'
+			})
+		}else{
+			alert('NG');
+		}
+		$("#province").html(html);
+		{{if $data!=1}}
+		$("#province").val('{{$data["provice_code"]}}');
+		$.getJSON("{{site_url url='ajax/getcity'}}/{{$data['provice_code']}}",function(data){
+			html='<option value="">-请选择城市-</option>';
+			if (data!=1){
+				data.forEach(function (item) {
+					html+='<option value="'+item.code+'">'+item.name+'</option>'
+				})
+			}else{
 
+			}
+			$("#city").html(html);
+			$("#city").val('{{$data["city_code"]}}');
+
+		});
+		$.getJSON("{{site_url url='ajax/getarea'}}/{{$data['city_code']}}",function(data){
+			html='<option value="">-请选择区域-</option>';
+			if (data!=1){
+				data.forEach(function (item) {
+					html+='<option value="'+item.code+'">'+item.name+'</option>'
+				})
+			}else{
+
+			}
+			$("#area").html(html);
+			$("#area").val('{{$data["area_code"]}}');
+
+		});
+
+		{{/if}}
+	})
+
+	$("#province").change(function(){
+		$.getJSON("{{site_url url='ajax/getcity'}}/"+$("#province").val(),function(data){
+			html='<option value="">-请选择城市-</option>';
+			if (data!=1){
+				data.forEach(function (item) {
+					html+='<option value="'+item.code+'">'+item.name+'</option>'
+				})
+			}else{
+
+			}
+			$("#city").html(html);
+			$("#area").html("<option value=''>-请选择县区-</option>");
+		});
+	});
+
+	$("#city").change(function(){
+		$.getJSON("{{site_url url='ajax/getarea'}}/"+$("#city").val(),function(data){
+			html='<option value="">-请选择县区-</option>';
+			if (data!=1){
+				data.forEach(function (item) {
+					html+='<option value="'+item.code+'">'+item.name+'</option>'
+				})
+			}else{
+
+			}
+			$("#area").html(html);
+		});
+	});
+
+	$("#save_btn").click(function () {
+		if ($.trim($("#name").val())==""){
+			alert('请填写姓名')
+			return false;
+		}
+		if ($.trim($("#phone").val())==""){
+			alert('请填写电话')
+			return false;
+		}
+		if ($.trim($("#province").val())==""){
+			alert('请选择省份')
+			return false;
+		}
+		if ($.trim($("#city").val())==""){
+			alert('请选择城市')
+			return false;
+		}
+		if ($.trim($("#area").val())==""){
+			alert('请选择县区')
+			return false;
+		}
+		if ($.trim($("#address").val())==""){
+			alert('请填写详细地址')
+			return false;
+		}
+		$("#save_form").submit();
+	})
+	
+	$("#del_btn").click(function () {
+		url = "{{site_url url='product/delete_address'}}"
+		$('#save_form').attr('action',url)
+		$("#save_form").submit();
+	})
 });
 
 </script>

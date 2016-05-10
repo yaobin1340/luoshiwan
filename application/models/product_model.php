@@ -192,17 +192,48 @@ class Product_model extends MY_Model
         $data['default'] = $this->input->post('default')? 1 : -1;
         $data['openid'] = $openid;
         $this->db->trans_start();
-        if ($this->input->post('default')){
-            $this->db->where('openid',$openid)->update('address',array('default'=> -1));
-            $this->db->insert('address',$data);
+        if (!$this->input->post('id')){
+            if ($this->input->post('default')){
+                $this->db->where('openid',$openid)->update('address',array('default'=> -1));
+                $this->db->insert('address',$data);
+            }else{
+                $this->db->insert('address',$data);
+            }
         }else{
-             $this->db->insert('address',$data);
+            unset($data['id']);
+            if ($this->input->post('default')){
+                $this->db->where('openid',$openid)->update('address',array('default'=> -1));
+                $this->db->where('id',$this->input->post('id'))->update('address',$data);
+            }else{
+                $this->db->where('id',$this->input->post('id'))->update('address',$data);
+            }
         }
+
         $this->db->trans_complete();//------结束事务
         if ($this->db->trans_status() === FALSE) {
             return -1;
         } else {
             return 1;
         }
+    }
+
+    function get_address($id){
+        $openid=$this->session->userdata('openid');
+        $default_address=$this->db->select()->from('address')
+            ->where(array(
+               // 'openid'=>$openid,
+                'id'=> $id
+            ))->get()->row_array();
+
+        if (!$default_address){
+            $data=1;
+        }else{
+            $data=$default_address;
+        }
+        return $data;
+    }
+
+    function delete_address(){
+        $this->db->where('id',$this->input->post('id'))->delete('address');
     }
 }

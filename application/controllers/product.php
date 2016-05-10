@@ -58,9 +58,26 @@ class Product extends MY_Controller
         $this->cismarty->display('add_address.html');
     }
 
-    function save_address(){
+    function save_address($page=1){
       //  die(var_dump($this->input->post())) ;
        $this->product_model->save_address();
-        $this->show_cart();
+        if ($page == 1){
+            redirect('product/show_cart');
+        }elseif ($page ==2){
+            redirect('product/index');
+        }
     }
+
+    function edit_address($id){
+        //  die(var_dump($this->input->post())) ;
+        $data = $this->product_model->get_address($id);
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('edit_address.html');
+    }
+
+    function delete_address(){
+         $this->product_model->delete_address();
+         redirect('product/index');
+    }
+
 }
