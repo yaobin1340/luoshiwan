@@ -109,6 +109,7 @@ $(function(){
         var _qty = $("#buy_qty").val();
         var _price=$(".open_slt_price").html();
         all_price=parseInt(_qty)*parseFloat(_price);
+
         $(".price_all").html(all_price);
         $(".prt_type").html( $(".order_active").eq(0).find('flag').html()+'<img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;">')
         $(".prt_property").removeClass("on");
@@ -140,7 +141,7 @@ $(function(){
         var openid='123';
         var save_qty=$("#buy_qty").val();
         var pid="{{if $data['info']!=1}}{{$data['info']['id']}}{{/if}}";
-        var pd_id=$(".open_slt_content li").eq(0).find('detailid').html();
+        var pd_id=$(".open_slt_content li").filter('.order_active').eq(0).find('detailid').html();
         $.getJSON("{{site_url url='ajax/save_cart'}}/"+openid+"/"+save_qty+"/"+pid+"/"+pd_id,function(data){
          if (data==1){
                 alert('加入成功！');

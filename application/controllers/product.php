@@ -80,4 +80,27 @@ class Product extends MY_Controller
          redirect('product/index');
     }
 
+    /** 这里保存订单信息 */
+    function save_order(){
+        $data=$this->product_model->save_order();
+        if ($data == -1){
+            redirect('product/show_cart');
+        }else{
+            redirect('product/order_info/'.$data);
+        }
+    }
+
+    /** 这里显示订单信息 */
+    function show_order(){
+        $data=$this->product_model->show_order();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('my_order.html');
+    }
+
+    /** 这里显示订单详情 */
+    function order_info($id){
+        $data=$this->product_model->order_info($id);
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('my_order_info.html');
+    }
 }

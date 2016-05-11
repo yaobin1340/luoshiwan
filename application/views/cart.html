@@ -17,7 +17,7 @@
 						</span><span class="mail_tel">{{$foo['phone']}}</span></div>
 						<div class="sel_address_bottom">
 							{{if $foo['default']==1}}<span class="first_do">[默认]</span>{{/if}}
-							<input type="hidden" value="{{$foo['id']}}">
+							<input type="hidden"  value="{{$foo['id']}}">
 							收货地址：<span class="address_eq">{{$foo['f_name']}}{{$foo['g_name']}}{{$foo['h_name']}}{{$foo['address']}}</span></div>
 					</div>
 				</div>
@@ -39,7 +39,7 @@
  </ul>
  <!--内容开始-->
 
-
+<form id="save_form"  method="post" action="{{site_url url='product/save_order'}}">
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
 
 	 <div class="order_address" id="address" style="display: none">
@@ -53,7 +53,7 @@
 				  {{/if}}
 			 </span><span class="mail_tel"></span></div>
 			 <div class="sel_address_bottom">
-				 <input type="hidden" value="{{if $data['default_address']!=1}} {{$data['default_address']['id']}}{{/if}}">
+				 <input type="hidden" name="address_id" value="{{if $data['default_address']!=1}} {{$data['default_address']['id']}}{{/if}}">
 				 收货地址：<span class="address_eq">
 				  {{if $data['default_address']!=1}}
 				 {{$data['default_address']['f_name']}} {{$data['default_address']['g_name']}}{{$data['default_address']['h_name']}} {{$data['default_address']['address']}}
@@ -78,14 +78,14 @@
 			<div class="del_btn">编辑</div>
 			<div class="edit_div">
 				<div class="cart_btn_add" >
-					<a href="#" class="arrow click_subtract"><img src="/res/images/icon_jia.jpg"></a>
+					<a href="javascript:;" class="arrow click_subtract"><img src="/res/images/icon_jia.jpg"></a>
 					<input type="text"  name="qty" value="{{$foo['qty']}}" class="viewnum qty" style="width:30px; padding:0">
-					<a href="#" class="arrow click_add"><img src="/res/images/icon_jian.jpg"></a>
+					<a href="javascript:;" class="arrow click_add"><img src="/res/images/icon_jian.jpg"></a>
 				</div>
 				<span class="cart_spec_edit">{{$foo['de_size']}}</span>
 				<div class="cart_right">
 					<div class="cart_right_part over" name="save_cart[]">完成
-						<input type="hidden" value="{{$foo['id']}}">
+						<input name="cart_id[]" type="hidden" value="{{$foo['id']}}">
 					</div>
 					<div class="cart_right_part del" name="delete_cart[]">删除
 					<input type="hidden" value="{{$foo['id']}}">
@@ -100,6 +100,7 @@
     </ul>
 
  </div>
+</form>
   <!--底部菜单开始-->
   <ul class="bottom_menu" id="cart_bottom">
   	<li style=" position:relative; width: 66%; background: #ffffff; height: 2.5rem;">
@@ -223,7 +224,11 @@ $(function(){
 	
 	$("#order_btn").click(function () {
 	   var address_id = $("#mail_address_show").find('input').eq(0).val();
-		alert(address_id);
+		if (address_id==""){
+			alert('请选择地址！');
+		}else{
+			$("#save_form").submit();
+		}
 	})
 });
 </script>

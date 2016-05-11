@@ -70,4 +70,10 @@ class Ajax extends MY_Controller
         $data=$this->ajax_model->getarea($code);
         echo json_encode($data);
     }
+
+    /** 这里保存订单信息 */
+    function save_order($address_id,$pid){
+        $data=$this->ajax_model->save_order($address_id,$pid);
+        echo json_encode($data);
+    }
 }

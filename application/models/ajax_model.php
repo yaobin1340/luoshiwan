@@ -114,4 +114,8 @@ class Ajax_model extends MY_Model
             return $data;
         }
     }
+
+    function save_order($address_id,$pid){
+
+    }
 }
