@@ -110,31 +110,14 @@ function close_all_navtab(){
 					</div>
 
 					<div class="accordionHeader">
-						<h2><span>Folder</span>生产管理</h2>
+						<h2><span>Folder</span>订单管理</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-							<li><a href="<?php echo site_url('manage/list_production');?>" target="navTab" rel="list_production" onclick="close_all_navtab()">生产管理</a></li>
-							<li><a href="<?php echo site_url('manage/list_stock_log');?>" target="navTab" rel="list_stock_log" onclick="close_all_navtab()">包装入库</a></li>
+							<li><a href="<?php echo site_url('manage/list_order');?>" target="navTab" rel="list_order" onclick="close_all_navtab()">订单管理</a></li>
 						</ul>
 					</div>
 
-					<div class="accordionHeader">
-						<h2><span>Folder</span>用户管理</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree">
-							<li><a href="<?php echo site_url('manage/list_users');?>" target="navTab" rel="list_users" onclick="close_all_navtab()">用户管理</a></li>
-						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>客户管理</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree">
-							<li><a href="<?php echo site_url('manage/list_cust');?>" target="navTab" rel="list_cust" onclick="close_all_navtab()">客户管理</a></li>
-						</ul>
-					</div>
 				</div>
 
 

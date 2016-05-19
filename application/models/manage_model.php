@@ -104,44 +104,6 @@ class Manage_model extends MY_Model
 		return $data;
 	}
 
-	public function list_production($dialog){
-		// 每页显示的记录条数，默认20条
-		$numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-		$pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-		//获得总记录数
-		$this->db->select('count(1) as num');
-		$this->db->from('production');
-		if($dialog){
-			$this->db->where('status',1);
-		}
-		if($this->input->post('name'))
-			$this->db->like('name',$this->input->post('name'));
-
-		$rs_total = $this->db->get()->row();
-		//总记录数
-		$data['countPage'] = $rs_total->num;
-
-		$data['num'] = $this->input->post('num')?$this->input->post('num'):null;
-		//list
-		$this->db->select('a.*,color,rgb');
-		$this->db->from('production a');
-		$this->db->join('product b','a.num=b.num','left');
-		if($dialog){
-			$this->db->where('status',1);
-		}
-		if($this->input->post('name')){
-			$this->db->like('a.name',$this->input->post('name'));
-		}
-
-		$this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-		$this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-		$data['res_list'] = $this->db->get()->result();
-		$data['pageNum'] = $pageNum;
-		$data['numPerPage'] = $numPerPage;
-		return $data;
-	}
-
 	public function save_product(){
 		$data_head = array(
 			'name'=>$this->input->post('name'),
@@ -270,6 +232,64 @@ class Manage_model extends MY_Model
 		$this->db->select('*')->from('product_type');
 		$data = $this->db->get()->result();
 		return $data;
+	}
+
+	public function list_order(){
+		// 每页显示的记录条数，默认20条
+		$numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
+		$pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
+
+		//获得总记录数
+		$this->db->select('count(1) as num');
+		$this->db->from('order');
+
+		if($this->input->post('num'))
+			$this->db->like('num',$this->input->post('num'));
+		if($this->input->post('status'))
+			$this->db->where('status',$this->input->post('status'));
+
+		$rs_total = $this->db->get()->row();
+		//总记录数
+		$data['countPage'] = $rs_total->num;
+
+		$data['num'] = $this->input->post('num')?$this->input->post('num'):null;
+		$data['status'] = $this->input->post('status')?$this->input->post('status'):null;
+		//list
+		$this->db->select();
+		$this->db->from('order a');
+
+		if($this->input->post('num'))
+			$this->db->like('num',$this->input->post('num'));
+		if($this->input->post('status'))
+			$this->db->where('status',$this->input->post('status'));
+
+		$this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
+		$this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
+		$data['res_list'] = $this->db->get()->result();
+		$data['pageNum'] = $pageNum;
+		$data['numPerPage'] = $numPerPage;
+		return $data;
+	}
+
+	public function get_order($id){
+		$data['head'] = $this->db->select('a.*,b.name name,phone,address,zip,c.name province_name,d.name city_name,e.name area_name')->from('order a')
+			->join('address b','a.address_id=b.id','left')
+			->join('province c','b.provice_code=c.code','left')
+			->join('city d','b.city_code=d.code','left')
+			->join('area e','b.area_code=e.code','left')
+			->where('a.id',$id)->get()->row();
+
+		$data['list'] = $this->db->select('a.*,,b.name product_name,c.size')->from('order_detail a')
+			->join('product b','a.pid=b.id','left')
+			->join('product_detail c','a.pd_id=c.id','left')
+
+			->where('a.oid',$id)->get()->result();
+
+		return $data;
+	}
+
+	public function get_express(){
+		return $this->db->select()->from('express')->get()->result();
 	}
 
 

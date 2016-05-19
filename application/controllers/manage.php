@@ -239,6 +239,31 @@ class Manage extends CI_Controller {
 		return $subs;
 	}
 
+	public function list_order(){
+		$data = $this->manage_model->list_order();
+		$this->load->view('manage/list_order.php',$data);
+	}
+
+	public function edit_order($id){
+		$data = $this->manage_model->get_order($id);
+		$this->load->view('manage/edit_order.php',$data);
+	}
+
+	public function save_order(){
+		$rs = $this->manage_model->save_order();
+		if ($rs === 1) {
+			form_submit_json("200", "操作成功", "list_order");
+		} else {
+			form_submit_json("300", $rs);
+		}
+	}
+
+	public function fahuo($id){
+		$data = $this->manage_model->get_order($id);
+		$data['express'] = $this->manage_model->get_express();
+		$this->load->view('manage/fahuo_dialog.php',$data);
+	}
+
 
 
 
