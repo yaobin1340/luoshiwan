@@ -97,10 +97,54 @@
 					</tbody>
 				</table>
 			</fieldset>
-
+			<?php if($head->status == 2):?>
 			<ul>
 				<a class="fahuo" href="<?php echo site_url('manage/fahuo/'.$head->id)?>" target="dialog" rel="add_pics" title="发货" width="800" height="370" mask=true>发货</a>
 			</ul>
+			<?php endif;?>
+
+			<?php if($head->status > 2):?>
+				<fieldset>
+					<legend>物流信息</legend>
+					<dl>
+						<dt>发货时间：</dt>
+						<dd>
+							<?php echo $head->pdate;?>
+						</dd>
+					</dl>
+					<dl>
+						<dt>快递物流：</dt>
+						<dd>
+							<?php echo $head->express_name;?>
+						</dd>
+					</dl>
+					<dl>
+						<dt>运单号：</dt>
+						<dd>
+							<?php echo $head->express_num;?>
+						</dd>
+					</dl>
+
+					<table class="list nowrap"  width="100%" >
+						<thead>
+						<tr>
+							<th width="60" >时间</th>
+							<th width="80" >描述</th>
+						</tr>
+						</thead>
+						<tbody class="tbody">
+						<?php if(!empty($express)):?>
+							<?php foreach($express as $k=>$v):?>
+								<tr class="unitBox">
+									<td><?php echo $v['time']?></td>
+									<td><?php echo $v['context']?></td>
+								</tr>
+							<?php endforeach;?>
+						<?php endif;?>
+						</tbody>
+					</table>
+				</fieldset>
+			<?php endif;?>
 
         </div>
         <div class="formBar">

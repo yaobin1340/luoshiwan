@@ -272,11 +272,12 @@ class Manage_model extends MY_Model
 	}
 
 	public function get_order($id){
-		$data['head'] = $this->db->select('a.*,b.name name,phone,address,zip,c.name province_name,d.name city_name,e.name area_name')->from('order a')
+		$data['head'] = $this->db->select('a.*,b.name name,phone,address,zip,c.name province_name,d.name city_name,e.name area_name,f.name express_name')->from('order a')
 			->join('address b','a.address_id=b.id','left')
 			->join('province c','b.provice_code=c.code','left')
 			->join('city d','b.city_code=d.code','left')
 			->join('area e','b.area_code=e.code','left')
+			->join('express f','a.express=e.code','left')
 			->where('a.id',$id)->get()->row();
 
 		$data['list'] = $this->db->select('a.*,,b.name product_name,c.size')->from('order_detail a')
@@ -290,6 +291,18 @@ class Manage_model extends MY_Model
 
 	public function get_express(){
 		return $this->db->select()->from('express')->get()->result();
+	}
+
+	public function save_fahuo() {
+		$express = $this->input->post('express');
+		$express_num = $this->input->post('express_num');
+		$id = $this->input->post('id');
+
+		$rs = $this->db->where('id',$id)->update('order',array('express'=>$express,'express_num'=>$express_num,'status'=>3,'sdate'=>date('Y-m-d H:i:s')));
+		if($rs)
+			return 1;
+		else
+			return -1;
 	}
 
 

@@ -245,7 +245,18 @@ class Manage extends CI_Controller {
 	}
 
 	public function edit_order($id){
+
 		$data = $this->manage_model->get_order($id);
+		$data['express'] = '';
+
+		if($data['head']->express_num){
+			$express = $this->getorder($data['head']->express,$data['head']->express_num);
+			if(isset($express['data'])){
+				$data['express'] = $express['data'];
+			}else{
+				$data['express'] = array(array('context'=>'暂无快递信息','time'=>date('Y-m-d H:i:s',time())));
+			}
+		}
 		$this->load->view('manage/edit_order.php',$data);
 	}
 
@@ -261,7 +272,71 @@ class Manage extends CI_Controller {
 	public function fahuo($id){
 		$data = $this->manage_model->get_order($id);
 		$data['express'] = $this->manage_model->get_express();
+		$data['id'] = $id;
 		$this->load->view('manage/fahuo_dialog.php',$data);
+	}
+
+	public function save_fahuo() {
+		$ret = $this->manage_model->save_fahuo();
+		if($ret == 1){
+			form_submit_json("200", "操作成功", 'edit_order');
+		} else {
+			form_submit_json("300", "保存失败");
+		}
+	}
+
+
+	/*
+	 * 采集网页内容的方法
+	 */
+	private function getcontent($url){
+		if(function_exists("file_get_contents")){
+			$file_contents = file_get_contents($url);
+		}else{
+			$ch = curl_init();
+			$timeout = 5;
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			$file_contents = curl_exec($ch);
+			curl_close($ch);
+		}
+		return $file_contents;
+	}
+
+	/*
+	 * 解析object成数组的方法
+	 * @param $json 输入的object数组
+	 * return $data 数组
+	 */
+	private function json_array($json){
+		if($json){
+			foreach ((array)$json as $k=>$v){
+				$data[$k] = !is_string($v)?$this->json_array($v):$v;
+			}
+			return $data;
+		}
+	}
+
+	/*
+	 * 返回$data array      快递数组
+	 * @param $name         快递名称
+	 * 支持输入的快递名称如下
+	 * (申通-EMS-顺丰-圆通-中通-如风达-韵达-天天-汇通-全峰-德邦-宅急送-安信达-包裹平邮-邦送物流
+	 * DHL快递-大田物流-德邦物流-EMS国内-EMS国际-E邮宝-凡客配送-国通快递-挂号信-共速达-国际小包
+	 * 汇通快递-华宇物流-汇强快递-佳吉快运-佳怡物流-加拿大邮政-快捷速递-龙邦速递-联邦快递-联昊通
+	 * 能达速递-如风达-瑞典邮政-全一快递-全峰快递-全日通-申通快递-顺丰快递-速尔快递-TNT快递-天天快递
+	 * 天地华宇-UPS快递-新邦物流-新蛋物流-香港邮政-圆通快递-韵达快递-邮政包裹-优速快递-中通快递)
+	 * 中铁快运-宅急送-中邮物流
+	 * @param $order        快递的单号
+	 * $data['ischeck'] ==1   已经签收
+	 * $data['data']        快递实时查询的状态 array
+	 */
+	public  function getorder($name,$order){
+		$result = $this->getcontent("http://www.kuaidi100.com/query?type={$name}&postid={$order}");
+		$result = json_decode($result);
+		$data = $this->json_array($result);
+		return $data;
 	}
 
 
