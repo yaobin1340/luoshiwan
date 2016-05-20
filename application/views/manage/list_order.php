@@ -15,13 +15,14 @@
 					<td><label>订单编号：</label><input type="text" size="16" name="num" value="<?php echo $num;?>" /></td>
 					<td><label>状态：</label>
 					<select class="combox" name="status">
-						<option value="1">待付款</option>
-						<option value="2">待发货</option>
-						<option value="3">待收货</option>
-						<option value="4">待评价</option>
-						<option value="5">退款中</option>
-						<option value="6">已退款</option>
-						<option value="7">已评价</option>
+						<option value="">请选择状态</option>
+						<option value="1" <?php if($status == 1) echo 'selected="selected"'?>>待付款</option>
+						<option value="2" <?php if($status == 2) echo 'selected="selected"'?>>待发货</option>
+						<option value="3" <?php if($status == 3) echo 'selected="selected"'?>>待收货</option>
+						<option value="4" <?php if($status == 4) echo 'selected="selected"'?>>待评价</option>
+						<option value="5" <?php if($status == 5) echo 'selected="selected"'?>>退款中</option>
+						<option value="6" <?php if($status == 6) echo 'selected="selected"'?>>已退款</option>
+						<option value="7" <?php if($status == 7) echo 'selected="selected"'?>>已评价</option>
 					</select>
 					</td>
 				</tr>
