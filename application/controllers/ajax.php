@@ -85,9 +85,13 @@ class Ajax extends MY_Controller
 
     /** 这里修改默认地址 */
     function default_address($address_id){
-
         $data=$this->ajax_model->default_address($address_id);
         echo json_encode($data);
+    }
 
+    /** 这里做发货提醒 */
+    function change_remind($id){
+        $data=$this->ajax_model->change_remind($id);
+        echo json_encode($data);
     }
 }

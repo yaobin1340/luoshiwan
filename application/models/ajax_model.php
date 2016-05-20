@@ -189,4 +189,17 @@ class Ajax_model extends MY_Model
             return 1;
         }
     }
+
+    function change_remind($id){
+        $row = $this->db->select()->from('order')->where('id',$id)->get()->row_array();
+        if($row){
+            if($row['remind']==1){
+                $res = $this->db->where('id',$id)->update('order',array('remind'=>2));
+                if($res){
+                    return 1;
+                }
+            }
+        }
+        return -1;
+    }
 }
