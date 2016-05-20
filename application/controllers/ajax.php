@@ -76,4 +76,18 @@ class Ajax extends MY_Controller
         $data=$this->ajax_model->save_order($address_id,$pid);
         echo json_encode($data);
     }
+
+    /** 这里保存订单信息 */
+    function get_order($page=2,$status=null){
+        $data=$this->ajax_model->get_order($page,$status);
+        echo json_encode($data);
+    }
+
+    /** 这里修改默认地址 */
+    function default_address($address_id){
+
+        $data=$this->ajax_model->default_address($address_id);
+        echo json_encode($data);
+
+    }
 }

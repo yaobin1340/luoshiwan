@@ -1,0 +1,56 @@
+{{include file="head.html"}}
+	 </div>
+     <div class="sladdress_list"> 
+     	<ul>
+			{{if $data['item']!=1}}
+			{{foreach from=$data['item'] item=foo}}
+			<li>
+				<div class="order_address limit_address_padding limit_ht">
+					<div class="sel_address on">
+						<div class="sel_address_top"><span class="mail_name">{{$foo['name']}} ({{$foo['phone']}})</span><span class="mail_tel limit_col {{if $foo['default']==1}}on{{/if}}">默认地址</span></div>
+						<div class="sel_address_bottom">收货地址：<span class="address_eq">{{$foo['f_name']}}{{$foo['g_name']}}{{$foo['h_name']}}{{$foo['address']}}</span></div>
+						<div class="address_do">
+							<div class="address_left"><input name="check" type="radio" value="1" {{if $foo['default']==1}}checked="checked"{{/if}}  class="btn_address" /><label class="address_default">设为默认地址</label></div>
+							<div class="address_right"><a href="{{site_url url='product/edit_address'}}/{{$foo['id']}}"><span class="edit_address_btn">编辑</span></a> <a href="{{site_url url='product/delete_address'}}/{{$foo['id']}}"><span class="del_address_btn">删除</span></a>
+							<input name="address_id" type="hidden" value="{{$foo['id']}}">
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			{{/foreach}}
+			{{/if}}
+
+
+     	</ul>
+     </div>
+     <a href="{{site_url url='product/add_address/2'}}"><div class="sladdress_add">添加地址</div></a>
+
+
+</body>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/price_order.js"></script>
+<script type="text/javascript">
+$(function(){
+   $(".sladdress_list li").each(function(){
+   	 $(this).find(".btn_address").click(function(){
+   	 	$(this).parent().parent().siblings().find(".mail_tel").addClass("on");
+   	 	$(this).parent().parent().parent().parent().parent().siblings().find(".mail_tel").removeClass("on");
+   	 })
+   });
+
+	$("[name = 'check']").click(function(){
+		var address_id = $(this).parent().find('input').eq(0).val();
+		$.getJSON("{{site_url url='ajax/default_address'}}/"+address_id,function(data){
+			if(data==-1){
+			  alert('操作异常')
+			}
+		});
+	})
+});
+</script>
+</html>

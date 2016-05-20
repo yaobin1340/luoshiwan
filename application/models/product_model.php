@@ -123,6 +123,8 @@ class Product_model extends MY_Model
            ->get()->row_array();
         $details=$this->db->select()->from('product_detail')->where('pid',$id)->order_by('price','asc')->get()->result_array();
         $type=$this->db->select()->from('product_type')->where('id',$info['type'])->get()->row_array();
+        $comment = $this->db->select()->from('comment')->where('pid',$id)->where('flag',1)->order_by('cdate','desc')->get()->result_array();
+        $comment_num = $this->db->select('count(1) num')->from('comment')->where('pid',$id)->where('flag',1)->get()->row_array();
         if (!$info){
             $data['info']=1;
         }else{
@@ -138,6 +140,12 @@ class Product_model extends MY_Model
         }else{
             $data['title']=$type['name'];
         }
+        if (!$comment){
+            $data['comment']=1;
+        }else{
+            $data['comment']=$comment;
+        }
+        $data['comment_num']=$comment_num['num'];
         return $data;
     }
 
@@ -163,7 +171,7 @@ class Product_model extends MY_Model
             ->join('province f','f.code = a.provice_code','left')
             ->join('city g','g.code = a.city_code','left')
             ->join('area h','h.code = a.area_code','left')
-            ->where('a.openid',$openid)->get()->result_array();
+            ->where('a.openid',$openid)->where('a.del',1)->get()->result_array();
         //die(var_dump($this->db->last_query()));
         $default_address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
             ->join('province f','f.code = a.provice_code','left')
@@ -171,7 +179,8 @@ class Product_model extends MY_Model
             ->join('area h','h.code = a.area_code','left')
             ->where(array(
                 'a.openid'=>$openid,
-                'a.default'=>1
+                'a.default'=>1,
+                'a.del'=>1
             ))->get()->row_array();
         if (!$address){
             $data['address']=1;
@@ -233,8 +242,8 @@ class Product_model extends MY_Model
         return $data;
     }
 
-    function delete_address(){
-        $this->db->where('id',$this->input->post('id'))->delete('address');
+    function delete_address($id){
+        $this->db->where('id',$id)->update('address',array('del'=>-1));
     }
 
     function save_order(){
@@ -293,9 +302,33 @@ class Product_model extends MY_Model
     }
 
     /** 这里显示订单信息 */
-    function show_order(){
+    function show_order($status=null){
         $openid=$this->session->userdata('openid');
-       $order_main=$this->db->select()->from('order')->where('openid',$openid)->get()->result_array();
+       $this->db->select()->from('order')->where('openid',$openid);
+        if(!empty($status)){
+            switch ($status){
+                case 1:
+                    $this->db->where('status',1);
+                    break;
+                case 2:
+                    $this->db->where('status',2);
+                    break;
+                case 3:
+                    $this->db->where('status',3);
+                    break;
+                case 4:
+                    $this->db->where('status',4);
+                    break;
+                case 5:
+                    $this->db->where('status',5);
+                    break;
+
+            }
+        }
+        $this->db->where('del',1);
+        $this->db->limit(2);
+        $this->db->order_by('id','desc');
+        $order_main=$this->db->get()->result_array();
         if (!$order_main){
             $data['main'] = 1;
         }else{
@@ -304,11 +337,12 @@ class Product_model extends MY_Model
         foreach($order_main as $v){
             $ids[] = $v['id'];
         }
-        if ($ids){
+        if (isset($ids)){
             $order_detail=$this->db->select('a.*,b.bg_pic,b.name pro_name,c.size de_size')->from('order_detail a')
                 ->join('product b','a.pid = b.id','left')
                 ->join('product_detail c','a.pd_id = c.id','left')
                 ->where_in('oid',$ids)->get()->result_array();
+
             if (!$order_detail){
                 $data['detail'] = 1;
             }else{
@@ -346,5 +380,105 @@ class Product_model extends MY_Model
             $data['detail'] = $order_detail;
         }
         return $data;
+    }
+
+    /** 这里显示各个状态的订单数量 */
+    function order_num(){
+        $openid=$this->session->userdata('openid');
+        $res1=$this->db->select('count(1) num')->from('order')
+            ->where(array(
+                'openid'=>$openid,
+                'del'=>1,
+                'status'=>1
+            ))->get()->row_array();
+        $res2=$this->db->select('count(1) num')->from('order')
+            ->where(array(
+            'openid'=>$openid,
+            'del'=>1,
+            'status'=>2
+        ))->get()->row_array();
+        $res3=$this->db->select('count(1) num')->from('order')
+            ->where(array(
+                'openid'=>$openid,
+                'del'=>1,
+                'status'=>3
+            ))->get()->row_array();
+        $res4=$this->db->select('count(1) num')->from('order')
+            ->where(array(
+                'openid'=>$openid,
+                'del'=>1,
+                'status'=>4
+            ))->get()->row_array();
+        $res6=$this->db->select('count(1) num')->from('order')
+            ->where(array(
+                'openid'=>$openid,
+                'del'=>1,
+                'status'=>5
+            ))->get()->row_array();
+        $data['status1']=$res1['num'];
+        $data['status2']=$res2['num'];
+        $data['status3']=$res3['num'];
+        $data['status4']=$res4['num'];
+        $data['status6']=$res6['num'];
+        return $data;
+
+    }
+
+    function my_address(){
+        $openid=$this->session->userdata('openid');
+        $address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
+            ->join('province f','f.code = a.provice_code','left')
+            ->join('city g','g.code = a.city_code','left')
+            ->join('area h','h.code = a.area_code','left')
+            ->where('a.openid',$openid)->where('a.del',1)->get()->result_array();
+        if($address){
+            $data['item']=$address;
+        }else {
+            $data['item']=1;
+        }
+        return $data;
+
+    }
+
+    function save_feedback(){
+        $openid=$this->session->userdata('openid');
+        $username='测试名称';
+        if(!$this->input->post('id')){
+            return -1;
+        }
+
+        $row=$this->db->select()->from('comment')->where(array(
+            'openid'=>$openid,
+            'pid'=>$this->input->post('id'),
+            'flag'=>1
+        ))->get()->row_array();
+        $status=$this->db->select('status')->from('order')->where('id',$this->input->post('id'))->get()->row_array();
+        if($status['status']!=4){
+            return -1;
+        }
+        $this->db->trans_start();
+        if(!$row){
+            $data=array(
+                'username'=>$username,
+                'content'=>$this->input->post('content'),
+                'openid'=>$openid,
+                'cdate' => date("y-m-d H:i:s",time()),
+                'pid'=>$this->input->post('id')
+            );
+            $this->db->insert('comment',$data);
+            $this->db->where('id',$this->input->post('id'))->update('order',array('status'=>7));
+        }else{
+            $this->db->where('id',$this->input->post('id'))->update('order',array('status'=>7));
+        }
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    function delete_order($id){
+        return $this->db->where('id',$id)->update('order',array('del'=>-1));
     }
 }

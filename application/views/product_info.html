@@ -58,10 +58,33 @@
     <div class="ems">
          包邮</div>
     <div class="prt_type"><img src="/res/images/arrow_next.png" class="arrow_next" style="top: 0.85rem;"></div>
-    <div class="prt_info">
-    	<span class="xiangqing">详情</span>
-        {{if $data['info']!=1}}{{$data['info']['desc']}}{{/if}}
-    </div>
+     <div class="prt_info limit_prt_padding">
+         <ul class="prt_info_title">
+             <li class="active_on">宝贝详情</li>
+             <li>宝贝评价</li>
+         </ul>
+         <div class="tab_box">
+             <!--产品详情开始-->
+             <div class="prt_tab_list on">
+                 <p class="prt_tab_info"> {{if $data['info']!=1}}{{$data['info']['desc']}}{{/if}}</p>
+             </div>
+             <!--产品评论开始-->
+             <div class="prt_tab_list  limit_feedback_padding">
+                 <span class="feedback_num">共有<font>{{$data['comment_num']}}</font>条评论</span>
+                 <ul class="pinglun_list">
+                     {{if $data['comment']!=1}}
+                     {{foreach from=$data['comment'] item=doo}}
+                     <li>
+                         <span class="pinglun_name"><font>{{$doo['username']}}</font>({{$doo['cdate']}}):</span>
+                         <p class="pinglun_info">{{$doo['content']}}</p>
+                         <div class="wx_pic"><img src="/res/images/taste_pic.png"></div>
+                     </li>
+                     {{/foreach}}
+                     {{/if}}
+                 </ul>
+             </div>
+         </div>
+     </div>
  </div>
   <!--底部菜单开始-->
   <ul class="bottom_menu">
@@ -90,6 +113,22 @@ $(function(){
           	 $(".prt_property").removeClass("on");
           	 $(".prt_property_info").removeClass("pt-page-moveFromBottom");
           });
+
+    $(".open_slt_content li").each(function(){
+        $(this).on('tap',function(){
+            $(this).addClass("order_active");
+            $(this).siblings().removeClass("order_active");
+        });
+    });
+    $(".prt_info_title li").each(function(index){
+        $(this).on('tap',function(){
+            $(this).addClass("active_on");
+            $(this).siblings().removeClass("active_on");
+            $(".prt_tab_list").eq(index).addClass("on");
+            $(".prt_tab_list").eq(index).siblings().removeClass("on");
+        });
+
+    });
 
    $(".open_slt_content li").eq(0).addClass("order_active");
     var minprice =$(".open_slt_content li").eq(0).find('input').val();

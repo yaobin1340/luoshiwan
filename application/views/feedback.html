@@ -1,0 +1,30 @@
+{{include file="head.html"}}
+ <ul class="top_menu"> 
+   <div class="menu_content">评价<img src="/res/images/arrow_pre.png" class="back_icon"></div>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+	 <form id="form1" name="form1" method="post" action="{{site_url url='product/save_feedback'}}">
+		 <input type="hidden" name="id" value="{{$id}}">
+	    <div class="feedback_box">
+	    	<textarea name="content" cols="" rows="" class="feedback_input" required placeholder="亲，您不想说点什么嘛......"></textarea>
+	    	<div class="feedback_btn">
+	    		<input type="submit" name="button" id="sub" value="提交" />
+	    	</div>
+	    </div>
+	 </form>
+ </div>
+
+</body>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/price_order.js"></script>
+<script type="text/javascript">
+$(function(){
+
+});
+</script>
+</html>

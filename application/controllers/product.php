@@ -64,7 +64,7 @@ class Product extends MY_Controller
         if ($page == 1){
             redirect('product/show_cart');
         }elseif ($page ==2){
-            redirect('product/index');
+            redirect('product/my_address');
         }
     }
 
@@ -75,9 +75,9 @@ class Product extends MY_Controller
         $this->cismarty->display('edit_address.html');
     }
 
-    function delete_address(){
-         $this->product_model->delete_address();
-         redirect('product/index');
+    function delete_address($id){
+         $this->product_model->delete_address($id);
+         redirect('product/my_address');
     }
 
     /** 这里保存订单信息 */
@@ -102,5 +102,66 @@ class Product extends MY_Controller
         $data=$this->product_model->order_info($id);
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('my_order_info.html');
+    }
+
+    /** 这里进入个人中心 */
+    function my_center(){
+        $data=$this->product_model->order_num();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('my_center.html');
+    }
+
+    /** 这里显示各种状态的订单 */
+    function status_order($status=null){
+        $data=$this->product_model->show_order($status);
+        $this->cismarty->assign('status',$status);
+        $this->cismarty->assign('data',$data);
+        switch ($status){
+            case 1:
+                $this->cismarty->display('my_order_status.html');
+                break;
+            case 2:
+                $this->cismarty->display('my_order_status.html');
+                break;
+            case 3:
+                $this->cismarty->display('my_order_status.html');
+                break;
+            case 4:
+                $this->cismarty->display('my_order_status.html');
+                break;
+            case 5:
+                $this->cismarty->display('my_order_status.html');
+                break;
+            default:
+                $this->cismarty->display('my_order.html');
+        }
+
+    }
+
+    function my_address(){
+        $data=$this->product_model->my_address();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('my_address.html');
+    }
+
+    function feedback($id){
+        $this->cismarty->assign('id',$id);
+        $this->cismarty->display('feedback.html');
+    }
+
+    function save_feedback(){
+        $this->product_model->save_feedback();
+        redirect('product/status_order/4');
+    }
+
+    function delete_order($id,$status=null){
+        $this->product_model->delete_order($id);
+        if($status==1){
+            redirect('product/status_order/1');
+        }else{
+            redirect('product/status_order/4');
+        }
+
+
     }
 }

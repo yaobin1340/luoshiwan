@@ -1,10 +1,12 @@
 {{include file="head.html"}}
- <ul class="top_menu"> 
+ <ul class="top_menu">
+	 <a href="{{site_url url='product/my_address'}}">
    <div class="menu_content">编辑收货地址<img src="/res/images/arrow_pre.png" class="back_icon"></div>
+		 </a>
  </ul>
  <!--内容开始-->
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
- 	<form id="save_form" action="{{site_url url='product/save_address'}}" method="post" enctype="multipart/form-data">
+ 	<form id="save_form" action="{{site_url url='product/save_address'}}/2" method="post" enctype="multipart/form-data">
 		<input name="id" type="hidden" value="{{if $data!=1}}{{$data['id']}}{{/if}}">
  	<div class="address_part_one">
 		<div class="input_box"><input id="name" name="name" placeholder="姓名" type="text" required class="input_text" value="{{if $data!=1}}{{$data['name']}}{{/if}}"></div>
@@ -151,13 +153,13 @@ $(function(){
 			alert('请填写详细地址')
 			return false;
 		}
-		url = "{{site_url url='product/save_address'}}"
+		url = "{{site_url url='product/save_address'}}/2"
 		$('#save_form').attr('action',url)
 		$("#save_form").submit();
 	})
 	
 	$("#del_btn").click(function () {
-		url = "{{site_url url='product/delete_address'}}"
+		url = "{{site_url url='product/delete_address'}}/{{$data['id']}}"
 		$('#save_form').attr('action',url)
 		$("#save_form").submit();
 	})

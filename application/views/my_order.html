@@ -1,11 +1,11 @@
 {{include file="head.html"}}
  <ul class="top_menu">
-	 <a href="{{site_url url='product/index'}}">
+	 <a href="{{site_url url='product/my_center'}}">
    <div class="menu_content">我的订单<img src="/res/images/arrow_pre.png" class="back_icon"></div>
 		 </a>
  </ul>
  <!--内容开始-->
- <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+ <div id="order_list" class="main" style="margin-top:0; padding-bottom: 2.6rem;">
 	 {{if $data['main']!=1}}
 	 {{foreach from=$data['main'] item=foo}}
 	 <div class="order_list limit_shadow">
@@ -31,9 +31,9 @@
 	 </div>
 	 {{/foreach}}
 	 {{/if}}
-    
  </div>
-
+<span class="load_more" id="get_product">点击载入更多...</span>
+<input type="hidden" name="page" id="page" value="2">
 </body>
 <script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
@@ -59,6 +59,48 @@ $(function(){
     $("#address").click(function(){
     	    $(".address_list").addClass("pt-page-moveFromRight");
     });
+	$("#get_product").click(function () {
+
+		var page=$("#page").val();
+
+		$.getJSON("{{site_url url='ajax/get_order'}}/"+page,function(data){
+
+			html='';
+			path="{{site_url url='product/order_info'}}";
+			if (data!=1){
+				data.main.forEach(function (item) {
+					html+='<div class="order_list limit_shadow">'
+					html+='<div class="order_num">订单号：'+item.num+'</div>'
+					html+='<ul class="myorder_list">'
+					if (data.detail!=1){
+						data.detail.forEach(function (det) {
+							if(det.oid==item.id){
+								html+='<li>'
+								html+='<div class="cart_pic"><img src="/uploadfiles/pics/'+det.bg_pic+'"></div>'
+								html+='<span class="cart_title">'+det.pro_name+'</span>'
+								html+='<span class="cart_spec">'+det.de_size+'</span>'
+								html+='<div class="cart_price">'
+								html+='<span class="cart_price_show">￥<span class="price_num">'+det.price+'</span></span>'
+								html+='<span class="cart_num_show">x <span class="prt_num">'+det.qty+'</span></span>'
+								html+='</div>'
+								html+='</li>'
+							}
+						})
+					}
+					html+='<div class="order_time"><span class="time_show_order">下单时间：'+item.cdate+'</span>'
+					html+= '<a href="'+path+'/'+item.id+'">'
+					html+='<div class="order_more_btn">查看详情</div></a> </div>'
+					html+='</div>'
+				})
+				$("#order_list").append(html);
+				pageint=parseInt(page)+1;
+				$("#page").val(pageint);
+			} else{
+				$("#get_product").html('已无更多信息')
+			}
+
+		});
+	})
 });
 </script>
 </html>

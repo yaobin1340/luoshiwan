@@ -118,4 +118,75 @@ class Ajax_model extends MY_Model
     function save_order($address_id,$pid){
 
     }
+
+    /** 这里保存订单信息 */
+    function get_order($page,$status){
+        $limit=2;
+        $openid=$this->session->userdata('openid');
+        $this->db->select()->from('order')->where('openid',$openid);
+        if(!empty($status)){
+            switch ($status){
+                case 1:
+                    $this->db->where('status',1);
+                    break;
+                case 2:
+                    $this->db->where('status',2);
+                    break;
+                case 3:
+                    $this->db->where('status',3);
+                    break;
+                case 4:
+                    $this->db->where('status',4);
+                    break;
+                case 5:
+                    $this->db->where('status',5);
+                    break;
+
+            }
+        }
+        $this->db->where('del',1);
+        $this->db->limit($limit, $offset = ($page - 1) * $limit);
+        $this->db->order_by('id','desc');
+        $order_main=$this->db->get()->result_array();
+        if (!$order_main){
+            return 1;
+        }else{
+            $data['main'] = $order_main;
+        }
+        foreach($order_main as $v){
+            $ids[] = $v['id'];
+        }
+        if ($ids){
+            $order_detail=$this->db->select('a.*,b.bg_pic,b.name pro_name,c.size de_size')->from('order_detail a')
+                ->join('product b','a.pid = b.id','left')
+                ->join('product_detail c','a.pd_id = c.id','left')
+                ->where_in('oid',$ids)->get()->result_array();
+
+            if (!$order_detail){
+                $data['detail'] = 1;
+            }else{
+                $data['detail'] = $order_detail;
+            }
+        }else{
+            $data['detail'] = 1;
+        }
+
+        return $data;
+
+    }
+
+    /** 这里修改默认地址 */
+    function default_address($address_id){
+        $openid=$this->session->userdata('openid');
+        $this->db->trans_start();
+        $this->db->where('openid',$openid)->update('address',array('default'=> -1));
+        $this->db->where('id',$address_id)->update('address',array('default'=> 1));
+
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }
