@@ -98,8 +98,9 @@ class Product extends MY_Controller
     }
 
     /** 这里显示订单详情 */
-    function order_info($id){
+    function order_info($id,$status=null){
         $data=$this->product_model->order_info($id);
+        $this->cismarty->assign('status',$status);
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('my_order_info.html');
     }
@@ -133,7 +134,7 @@ class Product extends MY_Controller
                 $this->cismarty->display('my_order_status.html');
                 break;
             default:
-                $this->cismarty->display('my_order.html');
+                $this->cismarty->display('my_order_status.html');
         }
 
     }

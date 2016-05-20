@@ -1,6 +1,6 @@
 {{include file="head.html"}}
  <ul class="top_menu">
-	 <a href="{{site_url url='product/show_order'}}">
+	 <a href="{{site_url url='product/status_order'}}/{{$status}}">
    <div class="menu_content">我的订单<img src="/res/images/arrow_pre.png" class="back_icon"></div>
 		 </a>
  </ul>
@@ -32,10 +32,11 @@
 			<span class="myorder_title">收货地址：{{$data['main']['f_name']}}{{$data['main']['g_name']}}{{$data['main']['h_name']}}{{$data['main']['address']}}</span>
 			<span class="myorder_title">备注：</span>
 			<span class="myorder_title">订单状态：<font class="order_state">
-				{{if $data['main']['status']==1}}未付款{{/if}}
-				{{if $data['main']['status']==2}}未发货{{/if}}
-				{{if $data['main']['status']==3}}已发货{{/if}}
-				{{if $data['main']['status']==4}}已收货{{/if}}
+				{{if $data['main']['status']==1}}待付款{{/if}}
+				{{if $data['main']['status']==2}}待发货{{/if}}
+				{{if $data['main']['status']==3}}待收货{{/if}}
+				{{if $data['main']['status']==4}}待评论{{/if}}
+				{{if $data['main']['status']==5}}退款售后{{/if}}
 				</font></span>
 		</div>
 		{{/if}}

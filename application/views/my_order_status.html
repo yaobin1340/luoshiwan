@@ -2,11 +2,13 @@
  <ul class="top_menu">
 	 <a href="{{site_url url='product/my_center'}}">
    <div class="menu_content">
-	   {{if $status==1}}待付款{{/if}}
-	   {{if $status==2}}待发货{{/if}}
-	   {{if $status==3}}待收货{{/if}}
-	   {{if $status==4}}待评论{{/if}}
-	   {{if $status==5}}退款售后{{/if}}
+	   {{if $status==1}}待付款
+	   {{elseif $status==2}}待发货
+	   {{elseif $status==3}}待收货
+	   {{elseif $status==4}}待评论
+	   {{elseif $status==5}}退款售后
+	   {{else}}全部订单{{/if}}
+
 	   <img src="/res/images/arrow_pre.png" class="back_icon"></div>
 	 </a>
  </ul>
@@ -36,20 +38,24 @@
 		 <div class="order_time limit_border_bt"><span class="time_show_order">共<goods_num>0</goods_num>件商品  合计:￥<font class="price_font"><goods_price>0</goods_price></font>  (包邮)</span></div>
 		 <div class="btn_list">
 
-			 {{if $status==1}}
+			 {{if $foo['status']==1}}
 			 <div class="order_more_btn limit_bt_rt">付款</div>
 			 <a href="{{site_url url='product/delete_order'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">取消订单</div></a>{{/if}}
-			 {{if $status==2}}
+			 {{if $foo['status']==2}}
 			 <div class="order_more_btn limit_bt_rt" onclick="txfh({{$foo['id']}})">提醒发货</div>{{/if}}
-			 {{if $status==3}}
+			 {{if $foo['status']==3}}
 			 <div class="order_more_btn limit_bt_rt">确认收货</div><div class="order_more_btn limit_bt_rt limit_color_bg">查看物流</div>{{/if}}
-			 {{if $status==4}}
+			 {{if $foo['status']==4}}
 			 <a href="{{site_url url='product/feedback'}}/{{$foo['id']}}"><div class="order_more_btn limit_bt_rt">评价</div></a>
 			 <a href="{{site_url url='product/delete_order'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">删除订单</div></a>{{/if}}
-			 {{if $status==5}}
+			 {{if $foo['status']==5}}
 			 <div class="order_more_btn limit_bt_rt">退款处理中</div><div class="order_more_btn limit_bt_rt limit_color_bg">联系我们</div>{{/if}}
 		 </div>
-
+		 <div class="order_time">
+			 <span class="time_show_order">下单时间：{{$foo['cdate']}}</span>
+			 <a href="{{site_url url='product/order_info'}}/{{$foo['id']}}/{{$status}}">
+				 <div class="order_more_btn">查看详情</div></a>
+		 </div>
 	 </div>
 	 {{/foreach}}
 	 {{/if}}
@@ -88,8 +94,9 @@ $(function(){
 		var page=$("#page").val();
 
 		$.getJSON("{{site_url url='ajax/get_order'}}/"+page+"/{{$status}}",function(data){
-            var _delete_order='{{site_url url='product/delete_order'}}';
-			var _feedback='{{site_url url='product/feedback'}}';
+            var _delete_order = "{{site_url url='product/delete_order'}}";
+			var _feedback = "{{site_url url='product/feedback'}}";
+			var _order_info = "{{site_url url='product/order_info'}}";
 			html='';
 			path="{{site_url url='product/order_info'}}";
 			if (data!=1){
@@ -118,7 +125,7 @@ $(function(){
 						html+='<div class="order_more_btn limit_bt_rt">付款</div>'
 						html+='<a href="'+_delete_order+'/'+item.id+'/'+item.status+'"> <div class="order_more_btn limit_bt_rt limit_color_bg">取消订单</div></a>'
 					}else if(item.status==2){
-						html+='<div class="order_more_btn limit_bt_rt" onclick="txfh('+item.id+')>提醒发货</div>'
+						html+='<div class="order_more_btn limit_bt_rt" onclick="txfh('+item.id+')">提醒发货</div>'
 					}else if(item.status==3){
 						html+='<div class="order_more_btn limit_bt_rt">确认收货</div><div class="order_more_btn limit_bt_rt limit_color_bg">查看物流</div>'
 					}else if(item.status==4){
@@ -127,7 +134,11 @@ $(function(){
 					}else if(item.status==5){
 						html+='<div class="order_more_btn limit_bt_rt">退款处理中</div><div class="order_more_btn limit_bt_rt limit_color_bg">联系我们</div>'
 					}
-
+					html+='<div class="order_time">'
+					html+='<span class="time_show_order">下单时间：'+item.cdate+'</span>'
+					html+='<a href="'+_order_info+'/'+item.id+'/{{$status}}">'
+					html+='<div class="order_more_btn">查看详情</div></a>'
+					html+='</div>'
 					html+='</div></div>'
 				})
 				$("#get_order").before(html);
