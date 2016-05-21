@@ -481,4 +481,15 @@ class Product_model extends MY_Model
     function delete_order($id){
         return $this->db->where('id',$id)->update('order',array('del'=>-1));
     }
+
+    function show_express($id){
+        $row = $this->db->select('a.*,b.name ex_name')->from('order a')
+            ->join('express b','a.express = b.express','left')->where('a.id',$id)->get()->row_array();
+        if(!$row){
+            $data['head']=1;
+        }else{
+            $data['head']=$row;
+        }
+        return $data;
+    }
 }

@@ -145,14 +145,15 @@ class Product extends MY_Controller
         $this->cismarty->display('my_address.html');
     }
 
-    function feedback($id){
+    function feedback($id,$status=null){
         $this->cismarty->assign('id',$id);
+        $this->cismarty->assign('status',$status);
         $this->cismarty->display('feedback.html');
     }
 
-    function save_feedback(){
+    function save_feedback($status=null){
         $this->product_model->save_feedback();
-        redirect('product/status_order/4');
+        redirect('product/status_order/'.$status);
     }
 
     function delete_order($id,$status=null){
@@ -162,7 +163,21 @@ class Product extends MY_Controller
         }else{
             redirect('product/status_order/4');
         }
+    }
 
-
+    function show_express($id,$status=null){
+        $data = $this->product_model->show_express($id);
+        //die(var_dump($data));
+        if($data['head']!=1){
+            $express = $this->getorder($data['head']['express'],$data['head']['express_num']);
+        }
+        if(isset($express['data'])){
+            $data['express'] = $express['data'];
+        }else{
+            $data['express'] = array(array('context'=>'暂无快递信息','time'=>date('Y-m-d H:i:s',time())));
+        }
+        $this->cismarty->assign('status',$status);
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('express_info.html');
     }
 }

@@ -1,0 +1,41 @@
+{{include file="head.html"}}
+ <ul class="top_menu">
+	 <a href="{{site_url url='product/status_order'}}/{{$status}}">
+   <div class="menu_content">物流详情<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+ 	<div class="express_title">
+ 		<span class="express_status">物流状态<font>已签收</font></span>
+ 		<span class="express_order">运单号:{{if $data['head']!=1}}{{$data['head']['express_num']}}{{/if}}</span>
+ 		<span class="express_order">信息来源:{{if $data['head']!=1}}{{$data['head']['ex_name']}}{{/if}}</span>
+        <div class="prt_pic"><img src="/res/images/taste_pic.png"></div>
+ 	</div>  
+ 	<ul class="express_list">
+
+		{{foreach from=$data['express'] item=foo}}
+		<li>
+			<span class="express_list_info">{{$foo['context']}}</span>
+			<span class="express_list_time">{{$foo['time']}}</span>
+			<div class="line_x"></div>
+			<div class="line_y"><span class="round"></span></div>
+		</li>
+		{{/foreach}}
+
+
+ 	</ul> 	
+ </div>
+
+</body>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript" src="/res/js/price_order.js"></script>
+<script type="text/javascript">
+$(function(){
+
+});
+</script>
+</html>

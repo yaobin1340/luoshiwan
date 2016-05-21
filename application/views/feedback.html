@@ -1,10 +1,12 @@
 {{include file="head.html"}}
- <ul class="top_menu"> 
+ <ul class="top_menu">
+	 <a href="{{site_url url='product/status_order'}}/{{$status}}">
    <div class="menu_content">评价<img src="/res/images/arrow_pre.png" class="back_icon"></div>
+		 </a>
  </ul>
  <!--内容开始-->
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
-	 <form id="form1" name="form1" method="post" action="{{site_url url='product/save_feedback'}}">
+	 <form id="form1" name="form1" method="post" action="{{site_url url='product/save_feedback'}}/{{$status}}">
 		 <input type="hidden" name="id" value="{{$id}}">
 	    <div class="feedback_box">
 	    	<textarea name="content" cols="" rows="" class="feedback_input" required placeholder="亲，您不想说点什么嘛......"></textarea>
