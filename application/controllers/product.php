@@ -180,4 +180,15 @@ class Product extends MY_Controller
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('express_info.html');
     }
+
+    function my_info(){
+        $data = $this->product_model->my_info();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('my_info.html');
+    }
+
+    function save_my_info(){
+        $res = $this->product_model->save_my_info();
+        redirect('product/my_center');
+    }
 }

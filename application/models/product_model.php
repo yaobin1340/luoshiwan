@@ -492,4 +492,32 @@ class Product_model extends MY_Model
         }
         return $data;
     }
+
+    function my_info(){
+        $openid=$this->session->userdata('openid');
+        $row = $this->db->select()->from('user_info')->where('openid',$openid)->get()->row_array();
+        if(!$row){
+            $data['info'] = 1;
+        }else{
+            $data['info'] = $row;
+        }
+        return $data;
+    }
+
+    function save_my_info(){
+        $openid=$this->session->userdata('openid');
+        $data = array(
+            'name'=>$this->input->post('name'),
+            'mail'=>$this->input->post('mail'),
+            'phone'=>$this->input->post('phone'),
+            'sex'=>$this->input->post('sex'),
+            'openid'=>$openid
+        );
+        $row = $this->db->select()->from('user_info')->where('openid',$openid)->get()->row_array();
+        if(!$row){
+            return $this->db->insert('user_info',$data);
+        }else{
+            return $this->db->where('openid',$openid)->update('user_info',$data);
+        }
+    }
 }

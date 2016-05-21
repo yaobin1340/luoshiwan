@@ -1,0 +1,42 @@
+{{include file="head.html"}}
+ <ul class="top_menu">
+	 <a href="{{site_url url='product/my_center'}}">
+   <div class="menu_content">个人资料<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>
+ </ul>
+ <!--内容开始-->
+<form id="save_form" method="post" action="{{site_url url='product/save_my_info'}}">
+	<div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+		<div class="user_pic">
+			<div class="input_box limit_width"><input name="name" placeholder="姓名" type="text" required class="input_text" value="{{$data['info']['name']|default:''}}"></div>
+			<div class="input_box limit_width"><input name="mail" placeholder="邮箱" type="text" required class="input_text" value="{{$data['info']['mail']|default:''}}"></div>
+			<div class="input_box limit_width">
+				<img src="/res/images/icon_arrow_down.png" class="icon_down">
+				<select name="sex" id="sel_sex" class="select_box">
+					<option value="">性别</option>
+					<option value="1">男</option>
+					<option value="2">女</option>
+				</select>
+			</div>
+			<div class="input_box limit_width"><input name="phone" placeholder="手机" type="text" required class="input_text" value="{{$data['info']['phone']|default:''}}"></div>
+			<div class="btn_box"><input type="button" name="sumbit" id="save_btn" value="保存" class="form_sumbit"></div>
+		</div>
+	</div>
+</form>
+
+
+</body>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#sel_sex").val("{{$data['info']['sex']|default:''}}")
+
+	$("#save_btn").click(function () {
+		$("#save_form").submit();
+	})
+});
+</script>
+</html>
