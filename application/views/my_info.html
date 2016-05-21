@@ -7,7 +7,7 @@
 <form id="save_form" method="post" action="{{site_url url='product/save_my_info'}}">
 	<div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
 		<div class="user_pic">
-			<div class="input_box limit_width"><input name="name" placeholder="姓名" type="text" required class="input_text" value="{{$data['info']['name']|default:''}}"></div>
+			<div class="input_box limit_width"><input name="name" placeholder="姓名" type="text" readonly="readonly" required class="input_text" value="{{$data['name']}}"></div>
 			<div class="input_box limit_width"><input name="mail" placeholder="邮箱" type="text" required class="input_text" value="{{$data['info']['mail']|default:''}}"></div>
 			<div class="input_box limit_width">
 				<img src="/res/images/icon_arrow_down.png" class="icon_down">

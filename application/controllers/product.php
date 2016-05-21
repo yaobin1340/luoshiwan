@@ -108,6 +108,7 @@ class Product extends MY_Controller
     /** 这里进入个人中心 */
     function my_center(){
         $data=$this->product_model->order_num();
+        $this->cismarty->assign('username',$this->session->userdata('username'));
         $this->cismarty->assign('data',$data);
         $this->cismarty->display('my_center.html');
     }

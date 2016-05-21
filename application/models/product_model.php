@@ -501,6 +501,7 @@ class Product_model extends MY_Model
         }else{
             $data['info'] = $row;
         }
+        $data['name']=$this->session->userdata('username');
         return $data;
     }
 
