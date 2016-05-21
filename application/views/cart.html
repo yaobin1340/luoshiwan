@@ -98,8 +98,12 @@
 
 
     </ul>
-
+	 <div id="remark_div" class="remarks" style="display: none">
+		 <span class="remark_title">留言备注</span>
+		 <textarea name="remark" cols="" rows="" class="remark_content" placeholder="请输入..."></textarea>
+	 </div>
  </div>
+
 </form>
   <!--底部菜单开始-->
   <ul class="bottom_menu" id="cart_bottom">
@@ -220,6 +224,7 @@ $(function(){
 		var cart_path = "{{site_url url='product/show_cart'}}"
 		html+='<a href="'+cart_path+'"><div class="menu_content">返回<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>'
 		$(".top_menu").html(html);
+		$("#remark_div").css("display","block");
 	})
 	
 	$("#order_btn").click(function () {

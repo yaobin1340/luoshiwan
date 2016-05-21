@@ -268,6 +268,7 @@ class Product_model extends MY_Model
         //先新建order数据
         $order_data=array(
             'address_id'=>$this->input->post('address_id'),
+            'remark'=>$this->input->post('remark'),
             'num' => date("ymdHis",time()).mt_rand(0,9999),
             'cdate' => date("y-m-d H:i:s",time()),
             'status' => 1,

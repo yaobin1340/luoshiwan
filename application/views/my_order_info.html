@@ -30,7 +30,7 @@
 			<span class="myorder_title">联系人:{{$data['main']['add_name']}}</span>
 			<span class="myorder_title">手机：{{$data['main']['phone']}}</span>
 			<span class="myorder_title">收货地址：{{$data['main']['f_name']}}{{$data['main']['g_name']}}{{$data['main']['h_name']}}{{$data['main']['address']}}</span>
-			<span class="myorder_title">备注：</span>
+			<span class="myorder_title">备注：{{$data['main']['remark']}}</span>
 			<span class="myorder_title">订单状态：<font class="order_state">
 				{{if $data['main']['status']==1}}待付款{{/if}}
 				{{if $data['main']['status']==2}}待发货{{/if}}
