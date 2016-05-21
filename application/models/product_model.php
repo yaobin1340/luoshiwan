@@ -590,4 +590,48 @@ class Product_model extends MY_Model
             return 1;
         }
     }
+
+    function get_pro_info($pid,$pd_id){
+        $openid=$this->session->userdata('openid');
+        $detail = $this->db->select('a.*,c.size de_size,c.price de_price')->from('product a')
+            ->join('product_detail c','c.pid = a.id','left')
+            ->where(array(
+                'a.id'=>$pid,
+                'c.id'=>$pd_id
+            ))
+            ->get()->row_array();
+        if (!$detail){
+            $data['item']=1;
+        }else{
+            $data['item']=$detail;
+        }
+
+        $address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
+            ->join('province f','f.code = a.provice_code','left')
+            ->join('city g','g.code = a.city_code','left')
+            ->join('area h','h.code = a.area_code','left')
+            ->where('a.openid',$openid)->where('a.del',1)->get()->result_array();
+        //die(var_dump($this->db->last_query()));
+        $default_address=$this->db->select('a.*,f.name f_name,g.name g_name,h.name h_name')->from('address a')
+            ->join('province f','f.code = a.provice_code','left')
+            ->join('city g','g.code = a.city_code','left')
+            ->join('area h','h.code = a.area_code','left')
+            ->where(array(
+                'a.openid'=>$openid,
+                'a.default'=>1,
+                'a.del'=>1
+            ))->get()->row_array();
+        if (!$address){
+            $data['address']=1;
+        }else{
+            $data['address']=$address;
+        }
+        if (!$default_address){
+            $data['default_address']=1;
+        }else{
+            $data['default_address']=$default_address;
+        }
+
+        return $data;
+    }
 }

@@ -213,4 +213,12 @@ class Product extends MY_Controller
         $res = $this->product_model->refund($id);
         redirect('product/status_order/'.$status);
     }
+
+    function buy_pro($pid,$pd_id,$qty){
+        $data = $this->product_model->get_pro_info($pid,$pd_id);
+        $this->cismarty->assign('pid',$pid);
+        $this->cismarty->assign('qty',$qty);
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('order_confirm.html');
+    }
 }

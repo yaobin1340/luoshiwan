@@ -93,7 +93,7 @@
   <!--底部菜单开始-->
   <ul class="bottom_menu">
   	<li id="save_cart">加入购物车</li>
-  	<li>立即购买</li>
+  	<li id="buy_btn">立即购买</li>
 
   </ul>
 </body>
@@ -209,6 +209,14 @@ $(function(){
                 alert('收藏失败!');
             }
         });
+    })
+
+    $("#buy_btn").click(function(){
+        var save_qty=$("#buy_qty").val();
+        var pid="{{if $data['info']!=1}}{{$data['info']['id']}}{{/if}}";
+        var pd_id=$(".open_slt_content li").filter('.order_active').eq(0).find('detailid').html();
+        window.location.href="{{site_url url='product/buy_pro'}}/"+pid+'/'+pd_id+'/'+save_qty;
+
     })
 });
 </script>
