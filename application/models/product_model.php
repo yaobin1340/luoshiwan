@@ -442,7 +442,7 @@ class Product_model extends MY_Model
 
     function save_feedback(){
         $openid=$this->session->userdata('openid');
-        $username='测试名称';
+        $username=$this->session->userdata('username');
         if(!$this->input->post('id')){
             return -1;
         }
@@ -546,5 +546,26 @@ class Product_model extends MY_Model
 
     function delete_house($id){
         return $this->db->where('id',$id)->delete('house');
+    }
+
+    function receipt_goods($id){
+        $status=$this->db->select('status')->from('order')->where('id',$id)->get()->row_array();
+        $this->db->trans_start();
+        if($status['status']==3){
+            $data = array(
+                'status'=>4,
+                'pdate'=>date("y-m-d H:i:s",time())
+            );
+            $this->db->where('id',$id)->update('order',$data);
+        }else{
+            return -1;
+        }
+
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

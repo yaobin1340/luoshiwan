@@ -202,4 +202,9 @@ class Product extends MY_Controller
         $res = $this->product_model->delete_house($id);
         redirect('product/my_house');
     }
+
+    function receipt_goods($id,$status=null){
+        $res = $this->product_model->receipt_goods($id);
+        redirect('product/status_order/'.$status);
+    }
 }

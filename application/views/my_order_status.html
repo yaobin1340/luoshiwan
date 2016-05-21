@@ -44,7 +44,7 @@
 			 {{if $foo['status']==2}}
 			 <div class="order_more_btn limit_bt_rt" onclick="txfh({{$foo['id']}})">提醒发货</div>{{/if}}
 			 {{if $foo['status']==3}}
-			 <div class="order_more_btn limit_bt_rt">确认收货</div>
+			 <a href="{{site_url url='product/receipt_goods'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt">确认收货</div></a>
 			 <a href="{{site_url url='product/show_express'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">查看物流</div></a>
 			 {{/if}}
 			 {{if $foo['status']==4}}
@@ -100,6 +100,7 @@ $(function(){
 			var _feedback = "{{site_url url='product/feedback'}}";
 			var _order_info = "{{site_url url='product/order_info'}}";
 			var _show_express = "{{site_url url='product/show_express'}}";
+			var _receipt_goods ="{{site_url url='product/receipt_goods'}}";
 			html='';
 			path="{{site_url url='product/order_info'}}";
 			if (data!=1){
@@ -130,7 +131,7 @@ $(function(){
 					}else if(item.status==2){
 						html+='<div class="order_more_btn limit_bt_rt" onclick="txfh('+item.id+')">提醒发货</div>'
 					}else if(item.status==3){
-						html+='<div class="order_more_btn limit_bt_rt">确认收货</div>'
+						html+='<a href="'+_receipt_goods+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">确认收货</div></a>'
 						html+='<a href="'+_show_express+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">查看物流</div></a>'
 					}else if(item.status==4){
 						html+='<a href="'+_feedback+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">评价</div></a>'

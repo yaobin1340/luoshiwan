@@ -20,6 +20,7 @@ class MY_Controller extends CI_Controller
         $this->cismarty->assign('base_url',base_url());//url路径
 		ini_set('date.timezone','Asia/Shanghai');
 		$this->session->set_userdata('openid', 'sdasdsdsdfs3sad903ekncaocasoj');
+		$this->session->set_userdata('username', '测试名称');
 		//$this->session->sess_destroy();die;
 	 /*   if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
 	    	if(!$this->session->userdata('openid')){
