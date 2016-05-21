@@ -569,4 +569,24 @@ class Product_model extends MY_Model
             return 1;
         }
     }
+
+    function refund($id){
+        $status=$this->db->select('status')->from('order')->where('id',$id)->get()->row_array();
+        $this->db->trans_start();
+        if(in_array($status['status'],array(2,3,4,7))){
+            $data = array(
+                'status'=>5
+            );
+            $this->db->where('id',$id)->update('order',$data);
+        }else{
+            return -1;
+        }
+
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }

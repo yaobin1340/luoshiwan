@@ -40,16 +40,21 @@
 
 			 {{if $foo['status']==1}}
 			 <div class="order_more_btn limit_bt_rt">付款</div>
-			 <a href="{{site_url url='product/delete_order'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">取消订单</div></a>{{/if}}
+			 <a href="{{site_url url='product/delete_order'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">取消订单</div></a>
+			 {{/if}}
 			 {{if $foo['status']==2}}
-			 <div class="order_more_btn limit_bt_rt" onclick="txfh({{$foo['id']}})">提醒发货</div>{{/if}}
+			 <div class="order_more_btn limit_bt_rt" onclick="txfh({{$foo['id']}})">提醒发货</div>
+			 <a href="{{site_url url='product/refund'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt">申请退款</div></a>
+			 {{/if}}
 			 {{if $foo['status']==3}}
 			 <a href="{{site_url url='product/receipt_goods'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt">确认收货</div></a>
 			 <a href="{{site_url url='product/show_express'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">查看物流</div></a>
+			 <a href="{{site_url url='product/refund'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt">申请退款</div></a>
 			 {{/if}}
 			 {{if $foo['status']==4}}
 			 <a href="{{site_url url='product/feedback'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt">评价</div></a>
-			 <a href="{{site_url url='product/delete_order'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">删除订单</div></a>{{/if}}
+			 <a href="{{site_url url='product/delete_order'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">删除订单</div></a>
+			 <a href="{{site_url url='product/refund'}}/{{$foo['id']}}/{{$status}}"><div class="order_more_btn limit_bt_rt">申请退款</div></a>{{/if}}
 			 {{if $foo['status']==5}}
 			 <div class="order_more_btn limit_bt_rt">退款处理中</div><div class="order_more_btn limit_bt_rt limit_color_bg">联系我们</div>{{/if}}
 		 </div>
@@ -101,6 +106,7 @@ $(function(){
 			var _order_info = "{{site_url url='product/order_info'}}";
 			var _show_express = "{{site_url url='product/show_express'}}";
 			var _receipt_goods ="{{site_url url='product/receipt_goods'}}";
+			var _refund ="{{site_url url='product/refund'}}"
 			html='';
 			path="{{site_url url='product/order_info'}}";
 			if (data!=1){
@@ -130,12 +136,15 @@ $(function(){
 						html+='<a href="'+_delete_order+'/'+item.id+'/{{$status}}"> <div class="order_more_btn limit_bt_rt limit_color_bg">取消订单</div></a>'
 					}else if(item.status==2){
 						html+='<div class="order_more_btn limit_bt_rt" onclick="txfh('+item.id+')">提醒发货</div>'
+						html+='<a href="'+_refund+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">申请退款</div></a>'
 					}else if(item.status==3){
 						html+='<a href="'+_receipt_goods+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">确认收货</div></a>'
 						html+='<a href="'+_show_express+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">查看物流</div></a>'
+						html+='<a href="'+_refund+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">申请退款</div></a>'
 					}else if(item.status==4){
 						html+='<a href="'+_feedback+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">评价</div></a>'
 						html+='<a href="'+_delete_order+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt limit_color_bg">删除订单</div></a>'
+						html+='<a href="'+_refund+'/'+item.id+'/{{$status}}"><div class="order_more_btn limit_bt_rt">申请退款</div></a>'
 					}else if(item.status==5){
 						html+='<div class="order_more_btn limit_bt_rt">退款处理中</div><div class="order_more_btn limit_bt_rt limit_color_bg">联系我们</div>'
 					}

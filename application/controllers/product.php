@@ -208,4 +208,9 @@ class Product extends MY_Controller
         $res = $this->product_model->receipt_goods($id);
         redirect('product/status_order/'.$status);
     }
+
+    function refund($id,$status=null){
+        $res = $this->product_model->refund($id);
+        redirect('product/status_order/'.$status);
+    }
 }
