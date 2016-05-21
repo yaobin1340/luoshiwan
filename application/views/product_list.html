@@ -58,7 +58,7 @@ $(function(){
             if (data!=1){
                 data.forEach(function (item) {
                     html+='<li>'
-                    html+= '<a href="'+path+'/'+item.id+'">'
+                    html+= '<a href="'+path+'/'+item.id+'/{{$data['type_id']}}">'
                     html+='<div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/'+item.bg_pic+'"></div>'
                         html+='<span class="prt_pirce">￥'+item.price+'</span><span class="prt_title">'+item.name+'</span></a></li>'
                 })

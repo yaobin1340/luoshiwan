@@ -94,4 +94,16 @@ class Ajax extends MY_Controller
         $data=$this->ajax_model->change_remind($id);
         echo json_encode($data);
     }
+
+    /** 这里做保存收藏 */
+    function save_house($id){
+        $data=$this->ajax_model->save_house($id);
+        echo json_encode($data);
+    }
+
+    /** 捞取收藏信息 */
+    function get_house($page=1){
+        $data=$this->ajax_model->get_house($page);
+        echo json_encode($data);
+    }
 }

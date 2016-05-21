@@ -202,4 +202,49 @@ class Ajax_model extends MY_Model
         }
         return -1;
     }
+
+    /** 这里做保存收藏 */
+    function save_house($id){
+        $openid=$this->session->userdata('openid');
+        $row = $this->db->select()->from('house')->where('pid',$id)->where('openid',$openid)->get()->row_array();
+        if(!$row){
+            $data = array(
+                'openid'=>$openid,
+                'pid'=>$id,
+                'cdate' => date("y-m-d H:i:s",time())
+            );
+                $res = $this->db->insert('house',$data);
+                if($res){
+                    return 1;
+                }
+        }else{
+            return 2;
+        }
+        return -1;
+    }
+
+    /** 捞取收藏信息 */
+    function get_house($page=1){
+        $limit=6;
+        $openid=$this->session->userdata('openid');
+        $this->db->select('a.*,c.id house_id,min(b.price) price')->from('house c')
+            ->join('product a','a.id = c.pid','left')
+            ->join('product_detail b','a.id = b.pid','left')
+            ->where(array(
+                'a.status'=>1,
+                'c.openid'=>$openid
+            ));
+        $res=$this->db
+            ->group_by('c.pid')
+            ->order_by('c.id','desc')
+            ->limit($limit, $offset = ($page - 1) * $limit)
+            ->get()->result_array();
+        if (!$res){
+            return 1;
+        }else{
+            return $res;
+        }
+        /* echo $this->db->last_query();
+         die(var_dump($res));*/
+    }
 }

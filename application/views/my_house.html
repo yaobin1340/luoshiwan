@@ -1,0 +1,58 @@
+{{include file="head.html"}}
+ <ul class="top_menu">
+     <a href="{{site_url url='product/my_center'}}">
+   <div class="menu_content">我的收藏<img src="/res/images/arrow_pre.png" class="back_icon"></div>
+     </a>
+ </ul>
+ <!--内容开始-->
+ <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
+ 	 <ul class="index_list" id="index_list">
+         {{if $data['items']!=1}}
+         {{foreach from=$data['items'] item=foo}}
+         <li>
+             <a href="{{site_url url='product/product_info'}}/{{$foo['id']}}/-3">
+             <div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/{{$foo['bg_pic']}}"></div></a>
+                 <span class="prt_pirce">￥{{$foo['price']}}<span class="btn_del"><a href="{{site_url url='product/delete_house'}}/{{$foo['house_id']}}">删除</a></span></span>
+                 <span class="prt_title">{{$foo['name']}}</span>
+         </li>
+         {{/foreach}}
+         {{/if}}
+    </ul>
+    <span class="load_more" id="get_house">载入更多...</span>
+     <input type="hidden" name="page" id="page" value="2">
+ </div>
+
+</body>
+<script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/res/js/jquery-finger-0.1.0.min.js"></script>
+<script type="text/javascript" src="/res/js/topmenu.js"></script>
+<script type="text/javascript" src="/res/js/boxslide.js"></script>
+<script type="text/javascript" src="/res/js/lazyload.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("#get_house").click(function () {
+        var page=$("#page").val();
+        $.getJSON("{{site_url url='ajax/get_house'}}/"+page,function(data){
+            html='';
+            path="{{site_url url='product/product_info'}}";
+            delete_house="{{site_url url='product/delete_house'}}";
+            if (data!=1){
+                data.forEach(function (item) {
+                    html+='<li>'
+                    html+= '<a href="'+path+'/'+item.id+'/-3">'
+                    html+='<div class="prt_send"><img class="lazy" src="/res/images/bx_loader.gif" dataimg="/uploadfiles/pics/'+item.bg_pic+'"></div></a>'
+                    html+='<span class="prt_pirce">￥'+item.price+'<span class="btn_del"><a href="'+delete_house+'/'+item.house_id+'">删除</a></span></span>'
+                    html+='<span class="prt_title">'+item.name+'</span></li>'
+                })
+                $("#index_list").append(html);
+                pageint=parseInt(page)+1;
+                $("#page").val(pageint);
+            } else{
+                $("#get_house").html('已无更多信息')
+            }
+
+        });
+    })
+});
+</script>
+</html>

@@ -520,4 +520,31 @@ class Product_model extends MY_Model
             return $this->db->where('openid',$openid)->update('user_info',$data);
         }
     }
+
+    function my_house(){
+        $openid=$this->session->userdata('openid');
+        $this->db->select('a.*,c.id house_id,min(b.price) price')->from('house c')
+            ->join('product a','a.id = c.pid','left')
+            ->join('product_detail b','a.id = b.pid','left')
+            ->where(array(
+                'a.status'=>1,
+                'c.openid'=>$openid
+            ));
+        $res=$this->db
+            ->group_by('c.pid')
+            ->order_by('c.id','desc')
+            ->limit(6)
+            ->get()->result_array();
+        if (!$res){
+            $data['items']= 1;
+        }
+        /* echo $this->db->last_query();
+         die(var_dump($res));*/
+        $data['items']= $res;
+        return $data;
+    }
+
+    function delete_house($id){
+        return $this->db->where('id',$id)->delete('house');
+    }
 }

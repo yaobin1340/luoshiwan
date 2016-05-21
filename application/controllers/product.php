@@ -191,4 +191,15 @@ class Product extends MY_Controller
         $res = $this->product_model->save_my_info();
         redirect('product/my_center');
     }
+
+    function my_house(){
+        $data = $this->product_model->my_house();
+        $this->cismarty->assign('data',$data);
+        $this->cismarty->display('my_house.html');
+    }
+
+    function delete_house($id){
+        $res = $this->product_model->delete_house($id);
+        redirect('product/my_house');
+    }
 }
