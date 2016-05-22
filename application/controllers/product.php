@@ -53,18 +53,27 @@ class Product extends MY_Controller
     }
 
     /** 这里做地址的处理 */
-    function add_address($type){
+    function add_address($type,$pid=-1,$html_flag=-1){
         $this->cismarty->assign('type',$type);
+        $this->cismarty->assign('pid',$pid ? $pid : -1);
+        $this->cismarty->assign('html_flag',$html_flag ? $html_flag : -1);
         $this->cismarty->display('add_address.html');
     }
 
-    function save_address($page=1){
+    function save_address($page=1,$pid=-1,$html_flag=-1){
       //  die(var_dump($this->input->post())) ;
        $this->product_model->save_address();
         if ($page == 1){
             redirect('product/show_cart');
         }elseif ($page ==2){
             redirect('product/my_address');
+        }else{
+            if($pid > 0){
+                redirect('product/product/'.$pid.'/'.$html_flag);
+            }else{
+                redirect('product/my_address');
+            }
+
         }
     }
 
@@ -214,11 +223,22 @@ class Product extends MY_Controller
         redirect('product/status_order/'.$status);
     }
 
-    function buy_pro($pid,$pd_id,$qty){
+    function buy_pro($pid,$pd_id,$qty,$html_flag){
         $data = $this->product_model->get_pro_info($pid,$pd_id);
         $this->cismarty->assign('pid',$pid);
+        $this->cismarty->assign('pd_id',$pd_id);
         $this->cismarty->assign('qty',$qty);
         $this->cismarty->assign('data',$data);
+        $this->cismarty->assign('html_flag',$html_flag);
         $this->cismarty->display('order_confirm.html');
+    }
+
+    function save_order_one(){
+        $data = $this->product_model->save_order_one();
+        if ($data == -1){
+            redirect('product/index');
+        }else{
+            redirect('product/order_info/'.$data);
+        }
     }
 }

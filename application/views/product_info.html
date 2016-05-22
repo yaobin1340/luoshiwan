@@ -215,7 +215,7 @@ $(function(){
         var save_qty=$("#buy_qty").val();
         var pid="{{if $data['info']!=1}}{{$data['info']['id']}}{{/if}}";
         var pd_id=$(".open_slt_content li").filter('.order_active').eq(0).find('detailid').html();
-        window.location.href="{{site_url url='product/buy_pro'}}/"+pid+'/'+pd_id+'/'+save_qty;
+        window.location.href="{{site_url url='product/buy_pro'}}/"+pid+'/'+pd_id+'/'+save_qty+'/{{$html_flag}}';
 
     })
 });

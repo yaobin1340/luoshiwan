@@ -634,4 +634,34 @@ class Product_model extends MY_Model
 
         return $data;
     }
+
+    function save_order_one(){
+        $openid=$this->session->userdata('openid');
+        $this->db->trans_start();
+        //先新建order数据
+        $order_data=array(
+            'address_id'=>$this->input->post('address_id'),
+            'remark'=>$this->input->post('remark'),
+            'num' => date("ymdHis",time()).mt_rand(0,9999),
+            'cdate' => date("y-m-d H:i:s",time()),
+            'status' => 1,
+            'openid' => $openid
+        );
+        $this->db->insert('order',$order_data);
+        $order_id = $this->db->insert_id();
+            $this->db->insert('order_detail',array(
+                'oid'=>$order_id,
+                'pid'=>$this->input->post('pid'),
+                'price'=>$this->input->post('price'),
+                's_price'=>0,
+                'qty'=>$this->input->post('qty'),
+                'pd_id'=>$this->input->post('pd_id')
+            ));
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return -1;
+        } else {
+            return $order_id;
+        }
+    }
 }

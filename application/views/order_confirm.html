@@ -1,6 +1,6 @@
 {{include file="head.html"}}
  <ul class="top_menu">
-	 <a href="{{site_url url='product/product_info'}}/{{$pid}}">
+	 <a href="{{site_url url='product/product_info'}}/{{$pid}}/{{$html_flag}}">
    <div class="menu_content">确认订单<img src="/res/images/arrow_pre.png" class="back_icon"></div>
 		 </a>
  </ul>
@@ -31,11 +31,15 @@
 			{{/if}}
 		</ul>
 	</div>
-	<a href="{{site_url url='product/add_address'}}/1"> <div class="sladdress_add">添加地址</div></a>
+	<a href="{{site_url url='product/add_address'}}/3/{{$pid}}/{{$html_flag}}"> <div class="sladdress_add">添加地址</div></a>
 </div>
  <!--内容开始-->
 
-
+<form id="save_form" method="post" action="{{site_url url='product/save_order_one'}}">
+	<input type="hidden" name="pid" value="{{$pid}}">
+	<input type="hidden" name="price" value="{{$data['item']['de_price']|default:'0'}}">
+	<input type="hidden" name="qty" value="{{$qty|default:'0'}}">
+	<input type="hidden" name="pd_id" value="{{$pd_id}}">
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
 	 <div class="order_address" id="address">
 		 <img src="/res/images/icon_dibiao.png" class="icon_dibiao">
@@ -69,17 +73,18 @@
 		</li>
 		{{/if}}
     </ul>
-    <div class="remarks">
-    	<span class="remark_title">留言备注</span>
-    	<textarea cols="" rows="" class="remark_content">请输入...</textarea>
-    </div>
+	 <div id="remark_div" class="remarks">
+		 <span class="remark_title">留言备注</span>
+		 <textarea name="remark" cols="" rows="" class="remark_content" placeholder="请输入..."></textarea>
+	 </div>
  </div>
+</form>
   <!--底部菜单开始-->
   <ul class="bottom_menu">
   	<li style=" position:relative; width: 66%; background: #ffffff; height: 2.5rem;">
   		<span class="price_sum">合计：<font>￥</font><span class="price_sum_num">0.0</span></span>
   	</li>
-  	<li style=" position:relative; width: 34%;">结算(<span class="sl_ck">1</span>)</li>
+  	<li id="order_btn" style=" position:relative; width: 34%;">结算(<span class="sl_ck">1</span>)</li>
   </ul>
 </body>
 <script type="text/javascript" src="/res/js/jquery-1.11.0.min.js"></script>
@@ -106,6 +111,19 @@ $(function(){
     $("#address").click(function(){
     	    $(".address_list").addClass("pt-page-moveFromRight");
     });
+	var _price = "{{$data['item']['de_price']|default:'0'}}";
+	var _qty = "{{$qty|default:'0'}}";
+	var all_price=parseInt(_qty)*parseFloat(_price);
+	$('.price_sum_num').html(all_price);
+
+	$("#order_btn").click(function () {
+		var address_id = $("#mail_address_show").find('input').eq(0).val();
+		if (address_id==""){
+			alert('请选择地址！');
+		}else{
+			$("#save_form").submit();
+		}
+	})
 });
 </script>
 </html>

@@ -1,12 +1,20 @@
 {{include file="head.html"}}
  <ul class="top_menu"> 
-   <a href="{{if $type ==1}}{{site_url url='product/show_cart'}}{{else}}{{site_url url='product/my_address'}}{{/if}}">
+   <a href="{{if $type ==1}}{{site_url url='product/show_cart'}}
+   {{elseif $type==2}}{{site_url url='product/my_address'}}
+   {{else}}
+   {{if $pid>0}}
+   {{site_url url='product/product_info'}}/{{$pid}}/{{$html_flag}}
+   {{else}}
+   {{site_url url='product/my_address'}}
+   {{/if}}
+   {{/if}}">
 
 	   <div class="menu_content">新增收货地址<img src="/res/images/arrow_pre.png" class="back_icon"></div></a>
  </ul>
  <!--内容开始-->
  <div class="main" style="margin-top:0; padding-bottom: 2.6rem;">
- 	<form id="save_form" action="{{site_url url='product/save_address'}}/{{$type}}" method="post" enctype="multipart/form-data">
+ 	<form id="save_form" action="{{site_url url='product/save_address'}}/{{$type}}/{{$pid}}/{{$html_flag}}" method="post" enctype="multipart/form-data">
  	<div class="address_part_one">
  		<div class="input_box"><input id="name" name="name" placeholder="姓名" type="text" required class="input_text"></div>
  		<div class="input_box"><input id="phone" name="phone" placeholder="电话" type="text" required class="input_text"></div>
