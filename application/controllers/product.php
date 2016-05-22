@@ -69,7 +69,7 @@ class Product extends MY_Controller
             redirect('product/my_address');
         }else{
             if($pid > 0){
-                redirect('product/product/'.$pid.'/'.$html_flag);
+                redirect('product/product_info/'.$pid.'/'.$html_flag);
             }else{
                 redirect('product/my_address');
             }
