@@ -79,7 +79,7 @@ class Product_model extends MY_Model
     }
 //
     public function get_product_main($flag){
-
+//
         $this->db->select('a.*,min(b.price) price')->from('product a')
             ->join('product_detail b','a.id = b.pid','left')
             ->where(array(
